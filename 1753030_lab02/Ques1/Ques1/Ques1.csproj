@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{91E4F50D-807A-4BA9-A2BE-C3E9BEB0E918}</ProjectGuid>
+    <ProjectGuid>{27BFD692-6C29-4694-9D65-E216941B3C15}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Ex_01</RootNamespace>
-    <AssemblyName>Ex_01</AssemblyName>
+    <RootNamespace>Ques1</RootNamespace>
+    <AssemblyName>Ques1</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,9 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Xulimang.cs" />
-    <Compile Include="Xulychuoi.cs" />
-    <None Include="TinhToan.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
