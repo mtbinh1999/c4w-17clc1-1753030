@@ -17,7 +17,7 @@ namespace Ques1_04
 
         static long mucTrungCap = 10000000;
         static long mucCaoCap = 100000000;
-        long _taiKhoan = 100000000;
+        long _taiKhoan = 0;
         // Chu y phuong thuc set
         public long TaiKhoan
         {
