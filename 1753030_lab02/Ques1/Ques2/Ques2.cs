@@ -48,7 +48,7 @@ namespace Ques2
              _diemTong %= 10;
         }
     }
-    class Program
+    class Ques2
     {
         static void Main(string[] args)
         {

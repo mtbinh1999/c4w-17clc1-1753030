@@ -59,7 +59,7 @@ namespace Ques1_04
             TaiKhoan += soTien;
         }
     }
-    class Program
+    class Ques1_04
     {
         static void Main(string[] args)
         {

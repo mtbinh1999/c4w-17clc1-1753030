@@ -28,7 +28,7 @@ namespace Ques1_02
             Console.WriteLine("{0} / {1} = {2}", v1, v2, v1 / v2);
         }
     }
-    class Program
+    class Ques1_02
     {
         delegate void KQTinhToan(decimal v1, decimal v2);
         static void Main(string[] args)

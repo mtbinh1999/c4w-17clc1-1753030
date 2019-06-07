@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ques1
 {
-    class Program
+    class Ques1_01
     {
         delegate decimal TinhToan(decimal v1, decimal v2);
         static void Main(string[] args)

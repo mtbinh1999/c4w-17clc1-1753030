@@ -33,7 +33,7 @@ namespace Ques1_03
             return string.Format("<{0}>-{1}-[{2}]", _MSSV, _hoTen, _queQuan);
         }
     }
-    class Program
+    class Ques1_03
     {
         static void Main(string[] args)
         {
