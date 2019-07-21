@@ -37,7 +37,9 @@ namespace TotalCommander
         private void createListView1()
         {
             DirectoryInfo ourDir = new DirectoryInfo(ComboBox1.SelectedItem.ToString());
-            string filename;
+            listViewLeft.LargeImageList = largeIcon;
+            listViewLeft.SmallImageList = smallIcon;
+            //largeIcon.Images.Add("folder", Image.FromFile(Application.StartupPath + "\\Image\folder.png"));
             try
             {
                 foreach(FileInfo file in ourDir.GetFiles())
@@ -59,6 +61,20 @@ namespace TotalCommander
                         listViewLeft.Items.Add(item);
                     }
                 }
+
+                foreach (DirectoryInfo dir in ourDir.GetDirectories())
+                {
+                    if ((dir.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
+                    {
+                        ListViewItem item = new ListViewItem(dir.Name);
+                        item.Tag = dir.FullName;
+                        item.SubItems.Add("");
+                        item.SubItems.Add("<DIR>");
+                        item.SubItems.Add(dir.LastAccessTime.ToString());
+                        item.SubItems.Add(dir.Attributes.ToString());
+                        listViewLeft.Items.Add(item);
+                    }
+                }
             }
             catch
             {
@@ -69,13 +85,58 @@ namespace TotalCommander
 
         private void createListView2()
         {
+            DirectoryInfo ourDir = new DirectoryInfo(ComboBox2.SelectedItem.ToString());
+            listViewLeft.LargeImageList = largeIcon;
+            listViewLeft.SmallImageList = smallIcon;
+            //largeIcon.Images.Add("folder", Image.FromFile(Application.StartupPath + "\\Image\folder.png"));
+            try
+            {
+                foreach (FileInfo file in ourDir.GetFiles())
+                {
+                    if ((file.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
+                    {
+                        if (!largeIcon.Images.Keys.Contains(file.Extension))
+                        {
+                            largeIcon.Images.Add(file.Extension, Icon.ExtractAssociatedIcon(file.FullName));
+                            smallIcon.Images.Add(file.Extension, Icon.ExtractAssociatedIcon(file.FullName));
+                        }
+                        int find = largeIcon.Images.Keys.IndexOf(file.Extension);
+                        ListViewItem item = new ListViewItem(file.Name, find);
+                        item.Tag = file.FullName;
+                        item.SubItems.Add(file.Extension);
+                        item.SubItems.Add(file.Length.ToString());
+                        item.SubItems.Add(file.LastAccessTime.ToString());
+                        item.SubItems.Add(file.Attributes.ToString());
+                        listViewRight.Items.Add(item);
+                    }
+                }
 
+                foreach (DirectoryInfo dir in ourDir.GetDirectories())
+                {
+                    if ((dir.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
+                    {
+                        ListViewItem item = new ListViewItem(dir.Name);
+                        item.Tag = dir.FullName;
+                        item.SubItems.Add("");
+                        item.SubItems.Add("<DIR>");
+                        item.SubItems.Add(dir.LastAccessTime.ToString());
+                        item.SubItems.Add(dir.Attributes.ToString());
+                        listViewRight.Items.Add(item);
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Can't open Directory!");
+                return;
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             createComboBox();
             createListView1();
+            createListView2();
         }
 
         private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
