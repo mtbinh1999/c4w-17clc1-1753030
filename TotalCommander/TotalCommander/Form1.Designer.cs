@@ -78,6 +78,9 @@
             this.listButton = new System.Windows.Forms.ToolStripButton();
             this.detailButton = new System.Windows.Forms.ToolStripButton();
             this.iconButton = new System.Windows.Forms.ToolStripButton();
+            this.refreshButton = new System.Windows.Forms.ToolStripButton();
+            this.GoRoot1 = new System.Windows.Forms.ToolStripLabel();
+            this.GoRoot2 = new System.Windows.Forms.ToolStripLabel();
             this.menu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.Right2.SuspendLayout();
@@ -176,13 +179,13 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // helpToolStripMenuItem1
             // 
             this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
-            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(107, 22);
             this.helpToolStripMenuItem1.Text = "Help";
             this.helpToolStripMenuItem1.Click += new System.EventHandler(this.HelpToolStripMenuItem1_Click);
             // 
@@ -264,13 +267,15 @@
             // 
             this.TextBox2.Name = "TextBox2";
             this.TextBox2.Size = new System.Drawing.Size(300, 25);
+            this.TextBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox2_KeyDown);
             // 
             // Right1
             // 
             this.Right1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.Right1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ComboBox2,
-            this.Label2});
+            this.Label2,
+            this.GoRoot2});
             this.Right1.Location = new System.Drawing.Point(408, 0);
             this.Right1.Name = "Right1";
             this.Right1.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
@@ -333,7 +338,8 @@
             this.Left1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.Left1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ComboBox1,
-            this.Label1});
+            this.Label1,
+            this.GoRoot1});
             this.Left1.Location = new System.Drawing.Point(0, 0);
             this.Left1.Name = "Left1";
             this.Left1.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
@@ -369,6 +375,7 @@
             // 
             this.TextBox1.Name = "TextBox1";
             this.TextBox1.Size = new System.Drawing.Size(300, 25);
+            this.TextBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox1_KeyDown);
             // 
             // tableLayoutPanel2
             // 
@@ -398,6 +405,7 @@
             this.deleteButton.TabIndex = 4;
             this.deleteButton.Text = "Delete (F8)";
             this.deleteButton.UseVisualStyleBackColor = true;
+            this.deleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
             // 
             // folderButton
             // 
@@ -407,6 +415,7 @@
             this.folderButton.TabIndex = 3;
             this.folderButton.Text = "Folder (F7)";
             this.folderButton.UseVisualStyleBackColor = true;
+            this.folderButton.Click += new System.EventHandler(this.FolderButton_Click);
             // 
             // moveButton
             // 
@@ -416,6 +425,7 @@
             this.moveButton.TabIndex = 2;
             this.moveButton.Text = "Move (F6)";
             this.moveButton.UseVisualStyleBackColor = true;
+            this.moveButton.Click += new System.EventHandler(this.MoveButton_Click);
             // 
             // editButton
             // 
@@ -425,6 +435,7 @@
             this.editButton.TabIndex = 1;
             this.editButton.Text = "Edit (F4)";
             this.editButton.UseVisualStyleBackColor = true;
+            this.editButton.Click += new System.EventHandler(this.EditButton_Click);
             // 
             // viewButton
             // 
@@ -434,6 +445,7 @@
             this.viewButton.TabIndex = 0;
             this.viewButton.Text = "View (F3)";
             this.viewButton.UseVisualStyleBackColor = true;
+            this.viewButton.Click += new System.EventHandler(this.ViewButton_Click);
             // 
             // largeIcon
             // 
@@ -452,7 +464,8 @@
             this.toolBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.listButton,
             this.detailButton,
-            this.iconButton});
+            this.iconButton,
+            this.refreshButton});
             this.toolBar.Location = new System.Drawing.Point(0, 24);
             this.toolBar.Name = "toolBar";
             this.toolBar.Size = new System.Drawing.Size(817, 25);
@@ -488,6 +501,30 @@
             this.iconButton.Size = new System.Drawing.Size(23, 22);
             this.iconButton.Text = "Icon View";
             this.iconButton.Click += new System.EventHandler(this.IconButton_Click);
+            // 
+            // refreshButton
+            // 
+            this.refreshButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.refreshButton.Image = ((System.Drawing.Image)(resources.GetObject("refreshButton.Image")));
+            this.refreshButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.refreshButton.Name = "refreshButton";
+            this.refreshButton.Size = new System.Drawing.Size(23, 22);
+            this.refreshButton.Text = "Refresh";
+            this.refreshButton.Click += new System.EventHandler(this.ToolStripButton1_Click);
+            // 
+            // GoRoot1
+            // 
+            this.GoRoot1.Name = "GoRoot1";
+            this.GoRoot1.Size = new System.Drawing.Size(32, 22);
+            this.GoRoot1.Text = "Root";
+            this.GoRoot1.Click += new System.EventHandler(this.GoRoot1_Click);
+            // 
+            // GoRoot2
+            // 
+            this.GoRoot2.Name = "GoRoot2";
+            this.GoRoot2.Size = new System.Drawing.Size(35, 22);
+            this.GoRoot2.Text = "Root ";
+            this.GoRoot2.Click += new System.EventHandler(this.GoRoot2_Click);
             // 
             // Form1
             // 
@@ -572,6 +609,9 @@
         private System.Windows.Forms.ToolStripButton listButton;
         private System.Windows.Forms.ToolStripButton detailButton;
         private System.Windows.Forms.ToolStripButton iconButton;
+        private System.Windows.Forms.ToolStripButton refreshButton;
+        private System.Windows.Forms.ToolStripLabel GoRoot1;
+        private System.Windows.Forms.ToolStripLabel GoRoot2;
     }
 }
 

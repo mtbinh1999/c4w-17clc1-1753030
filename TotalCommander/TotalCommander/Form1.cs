@@ -15,7 +15,10 @@ namespace TotalCommander
     {
         private enum isFocus {Left, Right};
         private isFocus focusOn;
-
+        DirectoryInfo curDirLeft;
+        DirectoryInfo curDirRight;
+        DirectoryInfo rootLeft;
+        DirectoryInfo rootRight;
         public Form1()
         {
             InitializeComponent();
@@ -38,6 +41,9 @@ namespace TotalCommander
             DirectoryInfo ourDir = new DirectoryInfo(ComboBox1.SelectedItem.ToString());
             listViewLeft.LargeImageList = largeIcon;
             listViewLeft.SmallImageList = smallIcon;
+            TextBox1.Text = ourDir.FullName;
+            curDirLeft = ourDir;
+            rootLeft = ourDir;
             try
             {
                 foreach(FileInfo file in ourDir.GetFiles())
@@ -88,6 +94,9 @@ namespace TotalCommander
             listViewRight.LargeImageList = largeIcon;
             listViewRight.SmallImageList = smallIcon;
             //largeIcon.Images.Add("folder", Image.FromFile(Application.StartupPath + "\\Image\folder.png"));
+            TextBox2.Text = ourDir.FullName;
+            curDirRight = ourDir;
+            rootRight = ourDir;
             try
             {
                 foreach (FileInfo file in ourDir.GetFiles())
@@ -172,6 +181,85 @@ namespace TotalCommander
             };
         }
 
+        private void openDirectoryLeft()
+        {
+            listViewLeft.Items.Clear();
+            foreach (FileInfo file in curDirLeft.GetFiles())
+            {
+                if ((file.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
+                {
+                    if (!largeIcon.Images.Keys.Contains(file.Extension))
+                    {
+                        largeIcon.Images.Add(file.Extension, Icon.ExtractAssociatedIcon(file.FullName));
+                        smallIcon.Images.Add(file.Extension, Icon.ExtractAssociatedIcon(file.FullName));
+                    }
+                    int find = largeIcon.Images.Keys.IndexOf(file.Extension);
+                    ListViewItem item = new ListViewItem(file.Name, find);
+                    item.Tag = file;
+                    item.SubItems.Add(file.Extension);
+                    item.SubItems.Add(file.Length.ToString());
+                    item.SubItems.Add(file.LastAccessTime.ToString());
+                    item.SubItems.Add(file.Attributes.ToString());
+                    listViewLeft.Items.Add(item);
+                }
+            }
+
+            foreach (DirectoryInfo subDir in curDirLeft.GetDirectories())
+            {
+                if ((subDir.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
+                {
+                    ListViewItem item = new ListViewItem(subDir.Name, 0);
+                    item.Tag = subDir;
+                    item.SubItems.Add("");
+                    item.SubItems.Add("<DIR>");
+                    item.SubItems.Add(subDir.LastAccessTime.ToString());
+                    item.SubItems.Add(subDir.Attributes.ToString());
+                    listViewLeft.Items.Add(item);
+                }
+            }
+            TextBox1.Text = curDirLeft.FullName;
+        }
+
+        private void openDirectoryRight()
+        {
+            listViewRight.Items.Clear();
+            foreach (FileInfo file in curDirRight.GetFiles())
+            {
+                if ((file.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
+                {
+                    if (!largeIcon.Images.Keys.Contains(file.Extension))
+                    {
+                        largeIcon.Images.Add(file.Extension, Icon.ExtractAssociatedIcon(file.FullName));
+                        smallIcon.Images.Add(file.Extension, Icon.ExtractAssociatedIcon(file.FullName));
+                    }
+                    int find = largeIcon.Images.Keys.IndexOf(file.Extension);
+                    ListViewItem item = new ListViewItem(file.Name, find);
+                    item.Tag = file;
+                    item.SubItems.Add(file.Extension);
+                    item.SubItems.Add(file.Length.ToString());
+                    item.SubItems.Add(file.LastAccessTime.ToString());
+                    item.SubItems.Add(file.Attributes.ToString());
+                    listViewRight.Items.Add(item);
+                }
+            }
+
+            foreach (DirectoryInfo subDir in curDirRight.GetDirectories())
+            {
+                if ((subDir.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
+                {
+                    ListViewItem item = new ListViewItem(subDir.Name, 0);
+                    item.Tag = subDir;
+                    item.SubItems.Add("");
+                    item.SubItems.Add("<DIR>");
+                    item.SubItems.Add(subDir.LastAccessTime.ToString());
+                    item.SubItems.Add(subDir.Attributes.ToString());
+                    listViewRight.Items.Add(item);
+                }
+            }
+
+            TextBox2.Text = curDirRight.FullName;
+        }
+
         private void ListViewLeft_ItemActivate(object sender, EventArgs e)
         {
             focusOn = isFocus.Left;
@@ -179,41 +267,8 @@ namespace TotalCommander
             {
                 if (listViewLeft.SelectedItems[0].Tag.GetType() == typeof(DirectoryInfo))
                 {
-                    DirectoryInfo dir = (DirectoryInfo)listViewLeft.SelectedItems[0].Tag;
-                    listViewLeft.Items.Clear();
-                    foreach (FileInfo file in dir.GetFiles())
-                    {
-                        if ((file.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
-                        {
-                            if (!largeIcon.Images.Keys.Contains(file.Extension))
-                            {
-                                largeIcon.Images.Add(file.Extension, Icon.ExtractAssociatedIcon(file.FullName));
-                                smallIcon.Images.Add(file.Extension, Icon.ExtractAssociatedIcon(file.FullName));
-                            }
-                            int find = largeIcon.Images.Keys.IndexOf(file.Extension);
-                            ListViewItem item = new ListViewItem(file.Name, find);
-                            item.Tag = file;
-                            item.SubItems.Add(file.Extension);
-                            item.SubItems.Add(file.Length.ToString());
-                            item.SubItems.Add(file.LastAccessTime.ToString());
-                            item.SubItems.Add(file.Attributes.ToString());
-                            listViewLeft.Items.Add(item);
-                        }
-                    }
-
-                    foreach (DirectoryInfo subDir in dir.GetDirectories())
-                    {
-                        if ((subDir.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
-                        {
-                            ListViewItem item = new ListViewItem(subDir.Name, 0);
-                            item.Tag = subDir;
-                            item.SubItems.Add("");
-                            item.SubItems.Add("<DIR>");
-                            item.SubItems.Add(subDir.LastAccessTime.ToString());
-                            item.SubItems.Add(subDir.Attributes.ToString());
-                            listViewLeft.Items.Add(item);
-                        }
-                    }
+                    curDirLeft = (DirectoryInfo)listViewLeft.SelectedItems[0].Tag;
+                    openDirectoryLeft();
                 }
                 else
                 {
@@ -235,41 +290,8 @@ namespace TotalCommander
             {
                 if (listViewRight.SelectedItems[0].Tag.GetType() == typeof(DirectoryInfo))
                 {
-                    DirectoryInfo dir = (DirectoryInfo)listViewRight.SelectedItems[0].Tag;
-                    listViewRight.Items.Clear();
-                    foreach (FileInfo file in dir.GetFiles())
-                    {
-                        if ((file.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
-                        {
-                            if (!largeIcon.Images.Keys.Contains(file.Extension))
-                            {
-                                largeIcon.Images.Add(file.Extension, Icon.ExtractAssociatedIcon(file.FullName));
-                                smallIcon.Images.Add(file.Extension, Icon.ExtractAssociatedIcon(file.FullName));
-                            }
-                            int find = largeIcon.Images.Keys.IndexOf(file.Extension);
-                            ListViewItem item = new ListViewItem(file.Name, find);
-                            item.Tag = file;
-                            item.SubItems.Add(file.Extension);
-                            item.SubItems.Add(file.Length.ToString());
-                            item.SubItems.Add(file.LastAccessTime.ToString());
-                            item.SubItems.Add(file.Attributes.ToString());
-                            listViewRight.Items.Add(item);
-                        }
-                    }
-
-                    foreach (DirectoryInfo subDir in dir.GetDirectories())
-                    {
-                        if ((subDir.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
-                        {
-                            ListViewItem item = new ListViewItem(subDir.Name, 0);
-                            item.Tag = subDir;
-                            item.SubItems.Add("");
-                            item.SubItems.Add("<DIR>");
-                            item.SubItems.Add(subDir.LastAccessTime.ToString());
-                            item.SubItems.Add(subDir.Attributes.ToString());
-                            listViewRight.Items.Add(item);
-                        }
-                    }
+                    curDirRight = (DirectoryInfo)listViewRight.SelectedItems[0].Tag;
+                    openDirectoryRight();
                 }
                 else
                 {
@@ -310,6 +332,93 @@ namespace TotalCommander
             if (focusOn == isFocus.Left)
                 listViewLeft.View = View.LargeIcon;
             else listViewRight.View = View.LargeIcon;
+        }
+
+        private void TextBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                DirectoryInfo dir = new DirectoryInfo(TextBox1.Text.ToString());
+                if (dir.Exists)
+                {
+                    curDirLeft = dir;
+                    openDirectoryLeft();
+                }
+                else TextBox1.Text = curDirLeft.FullName;
+            }
+          
+        }
+
+        private void TextBox2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                DirectoryInfo dir = new DirectoryInfo(TextBox1.Text.ToString());
+                if (dir.Exists)
+                {
+                    curDirRight = dir;
+                    openDirectoryRight();
+                }
+                else TextBox2.Text = curDirRight.FullName;
+            }
+        }
+
+        private void ToolStripButton1_Click(object sender, EventArgs e)
+        {
+            if (focusOn == isFocus.Left)
+                openDirectoryLeft();
+            else openDirectoryRight();
+        }
+
+        private void GoRoot1_Click(object sender, EventArgs e)
+        {
+            curDirLeft = rootLeft;
+            openDirectoryLeft();
+        }
+
+        private void GoRoot2_Click(object sender, EventArgs e)
+        {
+            curDirRight = rootRight;
+            openDirectoryRight();
+        }
+        private void ViewButton_Click(object sender, EventArgs e)
+        {
+            if(focusOn == isFocus.Left)
+            {
+                if (listViewLeft.SelectedItems.Count > 0)
+                {
+                    if (listViewLeft.SelectedItems[0].Tag.GetType() == typeof(DirectoryInfo))
+                    {
+                        MessageBox.Show("This's a folder");
+                    }
+                    else
+                    {
+                        FileInfo file = (FileInfo)listViewLeft.SelectedItems[0].Tag;
+                        ViewForm f = new ViewForm(file.FullName);
+                        f.ShowDialog();
+                    }
+                }
+            }
+        }
+
+        private void EditButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MoveButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FolderButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
