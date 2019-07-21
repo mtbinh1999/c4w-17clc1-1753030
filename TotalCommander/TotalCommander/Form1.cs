@@ -140,6 +140,7 @@ namespace TotalCommander
 
         private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            focusOn = isFocus.Left;
             DriveInfo drive = new DriveInfo(ComboBox1.SelectedItem.ToString());
             try
             {
@@ -155,6 +156,7 @@ namespace TotalCommander
 
         private void ComboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
+            focusOn = isFocus.Right;
             DriveInfo drive = new DriveInfo(ComboBox2.SelectedItem.ToString());
             try
             {
@@ -171,6 +173,7 @@ namespace TotalCommander
 
         private void ListViewLeft_ItemActivate(object sender, EventArgs e)
         {
+            focusOn = isFocus.Left;
             try
             {
                 if (listViewLeft.SelectedItems[0].Tag.GetType() == typeof(DirectoryInfo))
@@ -226,6 +229,7 @@ namespace TotalCommander
 
         private void ListViewRight_ItemActivate(object sender, EventArgs e)
         {
+            focusOn = isFocus.Right;
             try
             {
                 if (listViewRight.SelectedItems[0].Tag.GetType() == typeof(DirectoryInfo))
@@ -277,6 +281,13 @@ namespace TotalCommander
             {
                 MessageBox.Show("Can't Open Directory");
             }
+        }
+
+        private void HelpToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(Application.StartupPath);
+            FileInfo file = new FileInfo(Application.StartupPath + "\\HelpMenu.pdf");
+            System.Diagnostics.Process.Start(file.FullName);
         }
     }
 }
