@@ -28,8 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,49 +43,61 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolBar = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.toolStrip5 = new System.Windows.Forms.ToolStrip();
-            this.toolStripTextBox2 = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStrip3 = new System.Windows.Forms.ToolStrip();
-            this.toolStripComboBox2 = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.listView2 = new System.Windows.Forms.ListView();
-            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-            this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStrip4 = new System.Windows.Forms.ToolStrip();
-            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
+            this.listViewLeft = new System.Windows.Forms.ListView();
+            this.colNameL = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colExtL = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colSizeL = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colDateL = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colAttrL = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Right2 = new System.Windows.Forms.ToolStrip();
+            this.TextBox2 = new System.Windows.Forms.ToolStripTextBox();
+            this.Right1 = new System.Windows.Forms.ToolStrip();
+            this.ComboBox2 = new System.Windows.Forms.ToolStripComboBox();
+            this.Label2 = new System.Windows.Forms.ToolStripLabel();
+            this.listViewRight = new System.Windows.Forms.ListView();
+            this.colNameR = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colExtR = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colSizeR = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colDateR = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colAttrR = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Left1 = new System.Windows.Forms.ToolStrip();
+            this.ComboBox1 = new System.Windows.Forms.ToolStripComboBox();
+            this.Label1 = new System.Windows.Forms.ToolStripLabel();
+            this.Left2 = new System.Windows.Forms.ToolStrip();
+            this.TextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.deleteButton = new System.Windows.Forms.Button();
             this.folderButton = new System.Windows.Forms.Button();
             this.moveButton = new System.Windows.Forms.Button();
             this.editButton = new System.Windows.Forms.Button();
             this.viewButton = new System.Windows.Forms.Button();
-            this.menuStrip1.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
+            this.largeIcon = new System.Windows.Forms.ImageList(this.components);
+            this.smallIcon = new System.Windows.Forms.ImageList(this.components);
+            this.menu.SuspendLayout();
+            this.toolBar.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            this.toolStrip5.SuspendLayout();
-            this.toolStrip3.SuspendLayout();
-            this.toolStrip2.SuspendLayout();
-            this.toolStrip4.SuspendLayout();
+            this.Right2.SuspendLayout();
+            this.Right1.SuspendLayout();
+            this.Left1.SuspendLayout();
+            this.Left2.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // menuStrip1
+            // menu
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.helpToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 24);
-            this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "menuStrip1";
+            this.menu.Location = new System.Drawing.Point(0, 0);
+            this.menu.Name = "menu";
+            this.menu.Size = new System.Drawing.Size(800, 24);
+            this.menu.TabIndex = 0;
+            this.menu.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
@@ -170,17 +183,17 @@
             this.helpToolStripMenuItem1.Size = new System.Drawing.Size(107, 22);
             this.helpToolStripMenuItem1.Text = "Help";
             // 
-            // toolStrip1
+            // toolBar
             // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton1,
             this.toolStripButton2,
             this.toolStripButton3});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(800, 25);
-            this.toolStrip1.TabIndex = 1;
-            this.toolStrip1.Text = "toolStrip1";
+            this.toolBar.Location = new System.Drawing.Point(0, 24);
+            this.toolBar.Name = "toolBar";
+            this.toolBar.Size = new System.Drawing.Size(800, 25);
+            this.toolBar.TabIndex = 1;
+            this.toolBar.Text = "ToolBar";
             // 
             // toolStripButton1
             // 
@@ -217,12 +230,12 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.toolStrip5, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.toolStrip3, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.listView1, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.listView2, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.toolStrip2, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.toolStrip4, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.listViewLeft, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.Right2, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.Right1, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.listViewRight, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.Left1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.Left2, 0, 1);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 52);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
@@ -233,106 +246,166 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(800, 375);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
-            // toolStrip5
+            // listViewLeft
             // 
-            this.toolStrip5.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripTextBox2});
-            this.toolStrip5.Location = new System.Drawing.Point(400, 28);
-            this.toolStrip5.Name = "toolStrip5";
-            this.toolStrip5.Size = new System.Drawing.Size(400, 25);
-            this.toolStrip5.TabIndex = 7;
-            this.toolStrip5.Text = "toolStrip5";
-            // 
-            // toolStripTextBox2
-            // 
-            this.toolStripTextBox2.Name = "toolStripTextBox2";
-            this.toolStripTextBox2.Size = new System.Drawing.Size(300, 25);
-            // 
-            // toolStrip3
-            // 
-            this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripComboBox2,
-            this.toolStripLabel2});
-            this.toolStrip3.Location = new System.Drawing.Point(400, 0);
-            this.toolStrip3.Name = "toolStrip3";
-            this.toolStrip3.Size = new System.Drawing.Size(400, 25);
-            this.toolStrip3.TabIndex = 5;
-            this.toolStrip3.Text = "toolStrip3";
-            // 
-            // toolStripComboBox2
-            // 
-            this.toolStripComboBox2.Name = "toolStripComboBox2";
-            this.toolStripComboBox2.Size = new System.Drawing.Size(121, 25);
-            // 
-            // toolStripLabel2
-            // 
-            this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(86, 22);
-            this.toolStripLabel2.Text = "toolStripLabel2";
-            // 
-            // listView1
-            // 
-            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.listViewLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(3, 57);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(394, 315);
-            this.listView1.TabIndex = 2;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listViewLeft.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colNameL,
+            this.colExtL,
+            this.colSizeL,
+            this.colDateL,
+            this.colAttrL});
+            this.listViewLeft.HideSelection = false;
+            this.listViewLeft.Location = new System.Drawing.Point(3, 57);
+            this.listViewLeft.Name = "listViewLeft";
+            this.listViewLeft.Size = new System.Drawing.Size(394, 315);
+            this.listViewLeft.TabIndex = 8;
+            this.listViewLeft.UseCompatibleStateImageBehavior = false;
+            this.listViewLeft.View = System.Windows.Forms.View.Details;
             // 
-            // listView2
+            // colNameL
             // 
-            this.listView2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.colNameL.Text = "Name";
+            this.colNameL.Width = 128;
+            // 
+            // colExtL
+            // 
+            this.colExtL.Text = "Ext";
+            // 
+            // colSizeL
+            // 
+            this.colSizeL.Text = "Size";
+            // 
+            // colDateL
+            // 
+            this.colDateL.Text = "Date";
+            // 
+            // colAttrL
+            // 
+            this.colAttrL.Text = "Attr";
+            // 
+            // Right2
+            // 
+            this.Right2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TextBox2});
+            this.Right2.Location = new System.Drawing.Point(400, 28);
+            this.Right2.Name = "Right2";
+            this.Right2.Size = new System.Drawing.Size(400, 25);
+            this.Right2.TabIndex = 7;
+            this.Right2.Text = "toolStrip5";
+            // 
+            // TextBox2
+            // 
+            this.TextBox2.Name = "TextBox2";
+            this.TextBox2.Size = new System.Drawing.Size(300, 25);
+            // 
+            // Right1
+            // 
+            this.Right1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ComboBox2,
+            this.Label2});
+            this.Right1.Location = new System.Drawing.Point(400, 0);
+            this.Right1.Name = "Right1";
+            this.Right1.Size = new System.Drawing.Size(400, 25);
+            this.Right1.TabIndex = 5;
+            this.Right1.Text = "toolStripRight";
+            // 
+            // ComboBox2
+            // 
+            this.ComboBox2.Name = "ComboBox2";
+            this.ComboBox2.Size = new System.Drawing.Size(121, 25);
+            this.ComboBox2.SelectedIndexChanged += new System.EventHandler(this.ComboBox2_SelectedIndexChanged);
+            // 
+            // Label2
+            // 
+            this.Label2.Name = "Label2";
+            this.Label2.Size = new System.Drawing.Size(86, 22);
+            this.Label2.Text = "toolStripLabel2";
+            // 
+            // listViewRight
+            // 
+            this.listViewRight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listView2.HideSelection = false;
-            this.listView2.Location = new System.Drawing.Point(403, 57);
-            this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(394, 315);
-            this.listView2.TabIndex = 3;
-            this.listView2.UseCompatibleStateImageBehavior = false;
+            this.listViewRight.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colNameR,
+            this.colExtR,
+            this.colSizeR,
+            this.colDateR,
+            this.colAttrR});
+            this.listViewRight.HideSelection = false;
+            this.listViewRight.Location = new System.Drawing.Point(403, 57);
+            this.listViewRight.Name = "listViewRight";
+            this.listViewRight.Size = new System.Drawing.Size(394, 315);
+            this.listViewRight.TabIndex = 2;
+            this.listViewRight.UseCompatibleStateImageBehavior = false;
+            this.listViewRight.View = System.Windows.Forms.View.Details;
             // 
-            // toolStrip2
+            // colNameR
             // 
-            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripComboBox1,
-            this.toolStripLabel1});
-            this.toolStrip2.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(400, 25);
-            this.toolStrip2.TabIndex = 4;
-            this.toolStrip2.Text = "toolStrip2";
+            this.colNameR.Text = "Name";
+            this.colNameR.Width = 128;
             // 
-            // toolStripComboBox1
+            // colExtR
             // 
-            this.toolStripComboBox1.Name = "toolStripComboBox1";
-            this.toolStripComboBox1.Size = new System.Drawing.Size(121, 25);
+            this.colExtR.Text = "Ext";
             // 
-            // toolStripLabel1
+            // colSizeR
             // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(86, 22);
-            this.toolStripLabel1.Text = "toolStripLabel1";
+            this.colSizeR.Text = "Size";
             // 
-            // toolStrip4
+            // colDateR
             // 
-            this.toolStrip4.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripTextBox1});
-            this.toolStrip4.Location = new System.Drawing.Point(0, 28);
-            this.toolStrip4.Name = "toolStrip4";
-            this.toolStrip4.Size = new System.Drawing.Size(400, 25);
-            this.toolStrip4.TabIndex = 6;
-            this.toolStrip4.Text = "toolStrip4";
+            this.colDateR.Text = "Date";
             // 
-            // toolStripTextBox1
+            // colAttrR
             // 
-            this.toolStripTextBox1.Name = "toolStripTextBox1";
-            this.toolStripTextBox1.Size = new System.Drawing.Size(300, 25);
+            this.colAttrR.Text = "Attr";
+            // 
+            // Left1
+            // 
+            this.Left1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ComboBox1,
+            this.Label1});
+            this.Left1.Location = new System.Drawing.Point(0, 0);
+            this.Left1.Name = "Left1";
+            this.Left1.Size = new System.Drawing.Size(400, 25);
+            this.Left1.TabIndex = 4;
+            this.Left1.Text = "toolStripLeft";
+            // 
+            // ComboBox1
+            // 
+            this.ComboBox1.Name = "ComboBox1";
+            this.ComboBox1.Size = new System.Drawing.Size(121, 25);
+            this.ComboBox1.SelectedIndexChanged += new System.EventHandler(this.ComboBox1_SelectedIndexChanged);
+            // 
+            // Label1
+            // 
+            this.Label1.Name = "Label1";
+            this.Label1.Size = new System.Drawing.Size(86, 22);
+            this.Label1.Text = "toolStripLabel1";
+            // 
+            // Left2
+            // 
+            this.Left2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TextBox1});
+            this.Left2.Location = new System.Drawing.Point(0, 28);
+            this.Left2.Name = "Left2";
+            this.Left2.Size = new System.Drawing.Size(400, 25);
+            this.Left2.TabIndex = 6;
+            this.Left2.Text = "toolStrip4";
+            // 
+            // TextBox1
+            // 
+            this.TextBox1.Name = "TextBox1";
+            this.TextBox1.Size = new System.Drawing.Size(300, 25);
             // 
             // tableLayoutPanel2
             // 
+            this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel2.ColumnCount = 5;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
@@ -396,6 +469,18 @@
             this.viewButton.Text = "View (F3)";
             this.viewButton.UseVisualStyleBackColor = true;
             // 
+            // largeIcon
+            // 
+            this.largeIcon.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.largeIcon.ImageSize = new System.Drawing.Size(16, 16);
+            this.largeIcon.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // smallIcon
+            // 
+            this.smallIcon.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.smallIcon.ImageSize = new System.Drawing.Size(16, 16);
+            this.smallIcon.TransparentColor = System.Drawing.Color.Transparent;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -403,25 +488,26 @@
             this.ClientSize = new System.Drawing.Size(800, 475);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.menuStrip1);
-            this.MainMenuStrip = this.menuStrip1;
+            this.Controls.Add(this.toolBar);
+            this.Controls.Add(this.menu);
+            this.MainMenuStrip = this.menu;
             this.Name = "Form1";
-            this.Text = "Form1";
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.Text = "TotalCommander";
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.menu.ResumeLayout(false);
+            this.menu.PerformLayout();
+            this.toolBar.ResumeLayout(false);
+            this.toolBar.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.toolStrip5.ResumeLayout(false);
-            this.toolStrip5.PerformLayout();
-            this.toolStrip3.ResumeLayout(false);
-            this.toolStrip3.PerformLayout();
-            this.toolStrip2.ResumeLayout(false);
-            this.toolStrip2.PerformLayout();
-            this.toolStrip4.ResumeLayout(false);
-            this.toolStrip4.PerformLayout();
+            this.Right2.ResumeLayout(false);
+            this.Right2.PerformLayout();
+            this.Right1.ResumeLayout(false);
+            this.Right1.PerformLayout();
+            this.Left1.ResumeLayout(false);
+            this.Left1.PerformLayout();
+            this.Left2.ResumeLayout(false);
+            this.Left2.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -430,7 +516,7 @@
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.MenuStrip menu;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
@@ -443,29 +529,41 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;
-        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStrip toolBar;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStripButton toolStripButton3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.ListView listView2;
-        private System.Windows.Forms.ToolStrip toolStrip2;
-        private System.Windows.Forms.ToolStrip toolStrip5;
-        private System.Windows.Forms.ToolStripTextBox toolStripTextBox2;
-        private System.Windows.Forms.ToolStrip toolStrip3;
-        private System.Windows.Forms.ToolStripComboBox toolStripComboBox2;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
-        private System.Windows.Forms.ToolStripComboBox toolStripComboBox1;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
-        private System.Windows.Forms.ToolStrip toolStrip4;
-        private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
+        private System.Windows.Forms.ListView listViewRight;
+        private System.Windows.Forms.ToolStrip Left1;
+        private System.Windows.Forms.ToolStrip Right2;
+        private System.Windows.Forms.ToolStripTextBox TextBox2;
+        private System.Windows.Forms.ToolStrip Right1;
+        private System.Windows.Forms.ToolStripComboBox ComboBox2;
+        private System.Windows.Forms.ToolStripLabel Label2;
+        private System.Windows.Forms.ToolStripComboBox ComboBox1;
+        private System.Windows.Forms.ToolStripLabel Label1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Button deleteButton;
         private System.Windows.Forms.Button folderButton;
         private System.Windows.Forms.Button moveButton;
         private System.Windows.Forms.Button editButton;
         private System.Windows.Forms.Button viewButton;
+        private System.Windows.Forms.ToolStrip Left2;
+        private System.Windows.Forms.ToolStripTextBox TextBox1;
+        private System.Windows.Forms.ImageList largeIcon;
+        private System.Windows.Forms.ColumnHeader colNameR;
+        private System.Windows.Forms.ColumnHeader colExtR;
+        private System.Windows.Forms.ColumnHeader colSizeR;
+        private System.Windows.Forms.ColumnHeader colDateR;
+        private System.Windows.Forms.ColumnHeader colAttrR;
+        private System.Windows.Forms.ListView listViewLeft;
+        private System.Windows.Forms.ColumnHeader colNameL;
+        private System.Windows.Forms.ColumnHeader colExtL;
+        private System.Windows.Forms.ColumnHeader colSizeL;
+        private System.Windows.Forms.ColumnHeader colDateL;
+        private System.Windows.Forms.ColumnHeader colAttrL;
+        private System.Windows.Forms.ImageList smallIcon;
     }
 }
 
