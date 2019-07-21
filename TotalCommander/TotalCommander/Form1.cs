@@ -38,6 +38,8 @@ namespace TotalCommander
         private void createListView1()
         {
             listViewLeft.Items.Clear();
+            ListViewItem root = new ListViewItem(":", 1);
+            root.Tag = curDirRight;
             DirectoryInfo ourDir = new DirectoryInfo(ComboBox1.SelectedItem.ToString());
             listViewLeft.LargeImageList = largeIcon;
             listViewLeft.SmallImageList = smallIcon;
@@ -363,6 +365,11 @@ namespace TotalCommander
             }
         }
 
+        private void refreshListView()
+        {
+            openDirectoryLeft();
+            openDirectoryRight();
+        }
         private void ToolStripButton1_Click(object sender, EventArgs e)
         {
             if (focusOn == isFocus.Left)
@@ -451,6 +458,72 @@ namespace TotalCommander
             }
         }
 
+        private void CopyFolder(string sourceFolder, string destFolder)
+        {
+            if (!Directory.Exists(destFolder))
+
+                Directory.CreateDirectory(destFolder);
+
+            string[] files = Directory.GetFiles(sourceFolder);
+
+            foreach (string file in files)
+
+            {
+
+                string name = Path.GetFileName(file);
+
+                string dest = Path.Combine(destFolder, name);
+
+                File.Copy(file, dest);
+
+            }
+
+            string[] folders = Directory.GetDirectories(sourceFolder);
+
+            foreach (string folder in folders)
+
+            {
+
+                string name = Path.GetFileName(folder);
+
+                string dest = Path.Combine(destFolder, name);
+
+                CopyFolder(folder, dest);
+
+            }
+        }
+
+
+
+        private void CopyButton_Click(object sender, EventArgs e)
+        {
+            if(focusOn == isFocus.Left)
+            {
+                if(listViewLeft.SelectedItems.Count > 0)
+                {
+                    for(int i = 0; i < listViewLeft.SelectedItems.Count; i++)
+                    {
+                        if(listViewLeft.SelectedItems[i].Tag.GetType() == typeof(DirectoryInfo))
+                        {
+                            DirectoryInfo dir = (DirectoryInfo)listViewLeft.SelectedItems[i].Tag;
+                            CopyFolder(dir.FullName, curDirRight.FullName);
+                        }
+                        else
+                        {
+                            FileInfo file = (FileInfo)listViewLeft.SelectedItems[i].Tag;
+                            string name = Path.GetFileName(file.FullName);
+                            string dest = Path.Combine(curDirRight.FullName, name);
+                            File.Copy(file.FullName, dest);
+                        }
+                    }
+                }
+            }
+            else
+            {
+
+            }
+        }
+
         private void MoveButton_Click(object sender, EventArgs e)
         {
             if(focusOn == isFocus.Left)
@@ -477,6 +550,7 @@ namespace TotalCommander
                     if(!dir.Exists)
                     {
                         Directory.CreateDirectory(curDirLeft.FullName + "\\New Folder");
+                        refreshListView();
                         return;
                     }
                     else
@@ -487,6 +561,7 @@ namespace TotalCommander
                             if(!edir.Exists)
                             {
                                 Directory.CreateDirectory(curDirLeft.FullName + string.Format("New Folder ({0})", i));
+                                refreshListView();
                                 return;
                             }
                             i++;
@@ -503,7 +578,6 @@ namespace TotalCommander
             }
             else
             {
-                MessageBox.Show(curDirRight.FullName);
                 int i = 1;
                 if ((curDirRight.Attributes & FileAttributes.ReadOnly) != FileAttributes.ReadOnly)
                 {
@@ -511,6 +585,7 @@ namespace TotalCommander
                     if (!dir.Exists)
                     {
                         Directory.CreateDirectory(curDirRight.FullName + "\\New Folder");
+                        refreshListView();
                         return;
                     }
                     else
@@ -521,6 +596,7 @@ namespace TotalCommander
                             if (!edir.Exists)
                             {
                                 Directory.CreateDirectory(curDirRight.FullName + string.Format("New Folder ({0})", i));
+                                refreshListView();
                                 return;
                             }
                             i++;
@@ -569,10 +645,10 @@ namespace TotalCommander
                             DirectoryInfo dir = (DirectoryInfo)listViewLeft.SelectedItems[i].Tag;
                             if (checkExitsFile(dir))
                             {
-                                dlr = MessageBox.Show("Confirm Delete Folder contains items!", "Contains item!", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                                dlr = MessageBox.Show(dir.Name + " contains items! Want to delete?", "Contains item!", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
                                 if (dlr == DialogResult.Cancel)
                                     break;
-                                try { dir.Delete(true); }
+                                try { dir.Delete(true); refreshListView(); }
                                 catch (IOException er)
                                 {
                                     MessageBox.Show(er.Message);
@@ -592,7 +668,7 @@ namespace TotalCommander
                         else
                         {
                             FileInfo file = (FileInfo)listViewLeft.SelectedItems[i].Tag;
-                            try { file.Delete(); }
+                            try { file.Delete(); refreshListView(); }
                             catch(IOException er)
                             {
                                 MessageBox.Show(er.Message);
@@ -616,10 +692,10 @@ namespace TotalCommander
                             DirectoryInfo dir = (DirectoryInfo)listViewRight.SelectedItems[i].Tag;
                             if (checkExitsFile(dir))
                             {
-                                dlr = MessageBox.Show("Confirm Delete Folder contains items!", "Contains item!", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                                dlr = MessageBox.Show(dir.Name + " contains items! Want to delete?", "Contains item!", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
                                 if (dlr == DialogResult.Cancel)
                                     break;
-                                try { dir.Delete(true); }
+                                try { dir.Delete(true); refreshListView(); }
                                 catch (IOException er)
                                 {
                                     MessageBox.Show(er.Message);
@@ -628,7 +704,7 @@ namespace TotalCommander
                             }
                             else
                             {
-                                try { dir.Delete(true); }
+                                try { dir.Delete(true); refreshListView(); }
                                 catch (IOException er)
                                 {
                                     MessageBox.Show(er.Message);
@@ -660,5 +736,7 @@ namespace TotalCommander
         {
             focusOn = isFocus.Left;
         }
+
+        
     }
 }

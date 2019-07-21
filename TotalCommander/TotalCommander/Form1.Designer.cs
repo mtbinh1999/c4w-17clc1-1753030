@@ -55,6 +55,7 @@
             this.Right1 = new System.Windows.Forms.ToolStrip();
             this.ComboBox2 = new System.Windows.Forms.ToolStripComboBox();
             this.Label2 = new System.Windows.Forms.ToolStripLabel();
+            this.GoRoot2 = new System.Windows.Forms.ToolStripLabel();
             this.listViewRight = new System.Windows.Forms.ListView();
             this.colNameR = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colExtR = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -64,14 +65,16 @@
             this.Left1 = new System.Windows.Forms.ToolStrip();
             this.ComboBox1 = new System.Windows.Forms.ToolStripComboBox();
             this.Label1 = new System.Windows.Forms.ToolStripLabel();
+            this.GoRoot1 = new System.Windows.Forms.ToolStripLabel();
             this.Left2 = new System.Windows.Forms.ToolStrip();
             this.TextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.deleteButton = new System.Windows.Forms.Button();
             this.folderButton = new System.Windows.Forms.Button();
             this.moveButton = new System.Windows.Forms.Button();
-            this.editButton = new System.Windows.Forms.Button();
             this.viewButton = new System.Windows.Forms.Button();
+            this.deleteButton = new System.Windows.Forms.Button();
+            this.copyButton = new System.Windows.Forms.Button();
+            this.editButton = new System.Windows.Forms.Button();
             this.largeIcon = new System.Windows.Forms.ImageList(this.components);
             this.smallIcon = new System.Windows.Forms.ImageList(this.components);
             this.toolBar = new System.Windows.Forms.ToolStrip();
@@ -79,8 +82,6 @@
             this.detailButton = new System.Windows.Forms.ToolStripButton();
             this.iconButton = new System.Windows.Forms.ToolStripButton();
             this.refreshButton = new System.Windows.Forms.ToolStripButton();
-            this.GoRoot1 = new System.Windows.Forms.ToolStripLabel();
-            this.GoRoot2 = new System.Windows.Forms.ToolStripLabel();
             this.menu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.Right2.SuspendLayout();
@@ -100,7 +101,7 @@
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.Padding = new System.Windows.Forms.Padding(3, 1, 0, 1);
-            this.menu.Size = new System.Drawing.Size(817, 24);
+            this.menu.Size = new System.Drawing.Size(947, 24);
             this.menu.TabIndex = 0;
             this.menu.Text = "menuStrip1";
             // 
@@ -210,7 +211,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.2F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 85.33334F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(817, 421);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(947, 421);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
             // listViewLeft
@@ -224,7 +225,7 @@
             this.listViewLeft.HideSelection = false;
             this.listViewLeft.Location = new System.Drawing.Point(3, 65);
             this.listViewLeft.Name = "listViewLeft";
-            this.listViewLeft.Size = new System.Drawing.Size(402, 340);
+            this.listViewLeft.Size = new System.Drawing.Size(467, 340);
             this.listViewLeft.TabIndex = 8;
             this.listViewLeft.UseCompatibleStateImageBehavior = false;
             this.listViewLeft.View = System.Windows.Forms.View.Details;
@@ -257,10 +258,10 @@
             this.Right2.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.Right2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TextBox2});
-            this.Right2.Location = new System.Drawing.Point(408, 32);
+            this.Right2.Location = new System.Drawing.Point(473, 32);
             this.Right2.Name = "Right2";
             this.Right2.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.Right2.Size = new System.Drawing.Size(409, 25);
+            this.Right2.Size = new System.Drawing.Size(474, 25);
             this.Right2.TabIndex = 7;
             this.Right2.Text = "toolStrip5";
             // 
@@ -277,10 +278,10 @@
             this.ComboBox2,
             this.Label2,
             this.GoRoot2});
-            this.Right1.Location = new System.Drawing.Point(408, 0);
+            this.Right1.Location = new System.Drawing.Point(473, 0);
             this.Right1.Name = "Right1";
             this.Right1.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.Right1.Size = new System.Drawing.Size(409, 25);
+            this.Right1.Size = new System.Drawing.Size(474, 25);
             this.Right1.TabIndex = 5;
             this.Right1.Text = "toolStripRight";
             // 
@@ -296,6 +297,13 @@
             this.Label2.Size = new System.Drawing.Size(86, 22);
             this.Label2.Text = "toolStripLabel2";
             // 
+            // GoRoot2
+            // 
+            this.GoRoot2.Name = "GoRoot2";
+            this.GoRoot2.Size = new System.Drawing.Size(35, 22);
+            this.GoRoot2.Text = "Root ";
+            this.GoRoot2.Click += new System.EventHandler(this.GoRoot2_Click);
+            // 
             // listViewRight
             // 
             this.listViewRight.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -305,9 +313,9 @@
             this.colDateR,
             this.colAttrR});
             this.listViewRight.HideSelection = false;
-            this.listViewRight.Location = new System.Drawing.Point(411, 65);
+            this.listViewRight.Location = new System.Drawing.Point(476, 65);
             this.listViewRight.Name = "listViewRight";
-            this.listViewRight.Size = new System.Drawing.Size(403, 337);
+            this.listViewRight.Size = new System.Drawing.Size(468, 337);
             this.listViewRight.TabIndex = 2;
             this.listViewRight.UseCompatibleStateImageBehavior = false;
             this.listViewRight.View = System.Windows.Forms.View.Details;
@@ -345,7 +353,7 @@
             this.Left1.Location = new System.Drawing.Point(0, 0);
             this.Left1.Name = "Left1";
             this.Left1.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.Left1.Size = new System.Drawing.Size(408, 25);
+            this.Left1.Size = new System.Drawing.Size(473, 25);
             this.Left1.TabIndex = 4;
             this.Left1.Text = "toolStripLeft";
             // 
@@ -361,6 +369,13 @@
             this.Label1.Size = new System.Drawing.Size(86, 22);
             this.Label1.Text = "toolStripLabel1";
             // 
+            // GoRoot1
+            // 
+            this.GoRoot1.Name = "GoRoot1";
+            this.GoRoot1.Size = new System.Drawing.Size(32, 22);
+            this.GoRoot1.Text = "Root";
+            this.GoRoot1.Click += new System.EventHandler(this.GoRoot1_Click);
+            // 
             // Left2
             // 
             this.Left2.ImageScalingSize = new System.Drawing.Size(32, 32);
@@ -369,7 +384,7 @@
             this.Left2.Location = new System.Drawing.Point(0, 32);
             this.Left2.Name = "Left2";
             this.Left2.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.Left2.Size = new System.Drawing.Size(408, 25);
+            this.Left2.Size = new System.Drawing.Size(473, 25);
             this.Left2.TabIndex = 6;
             this.Left2.Text = "toolStrip4";
             // 
@@ -381,39 +396,31 @@
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.ColumnCount = 5;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel2.Controls.Add(this.deleteButton, 4, 0);
+            this.tableLayoutPanel2.ColumnCount = 6;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel2.Controls.Add(this.folderButton, 3, 0);
             this.tableLayoutPanel2.Controls.Add(this.moveButton, 2, 0);
-            this.tableLayoutPanel2.Controls.Add(this.editButton, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.viewButton, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.deleteButton, 5, 0);
+            this.tableLayoutPanel2.Controls.Add(this.copyButton, 2, 0);
+            this.tableLayoutPanel2.Controls.Add(this.editButton, 1, 0);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 459);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(797, 44);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(941, 44);
             this.tableLayoutPanel2.TabIndex = 3;
-            // 
-            // deleteButton
-            // 
-            this.deleteButton.Location = new System.Drawing.Point(639, 3);
-            this.deleteButton.Name = "deleteButton";
-            this.deleteButton.Size = new System.Drawing.Size(153, 38);
-            this.deleteButton.TabIndex = 4;
-            this.deleteButton.Text = "Delete (F8)";
-            this.deleteButton.UseVisualStyleBackColor = true;
-            this.deleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
             // 
             // folderButton
             // 
-            this.folderButton.Location = new System.Drawing.Point(480, 3);
+            this.folderButton.Location = new System.Drawing.Point(627, 3);
             this.folderButton.Name = "folderButton";
-            this.folderButton.Size = new System.Drawing.Size(153, 38);
+            this.folderButton.Size = new System.Drawing.Size(150, 38);
             this.folderButton.TabIndex = 3;
             this.folderButton.Text = "Folder (F7)";
             this.folderButton.UseVisualStyleBackColor = true;
@@ -421,45 +428,67 @@
             // 
             // moveButton
             // 
-            this.moveButton.Location = new System.Drawing.Point(321, 3);
+            this.moveButton.Location = new System.Drawing.Point(471, 3);
             this.moveButton.Name = "moveButton";
-            this.moveButton.Size = new System.Drawing.Size(153, 38);
+            this.moveButton.Size = new System.Drawing.Size(150, 38);
             this.moveButton.TabIndex = 2;
             this.moveButton.Text = "Move (F6)";
             this.moveButton.UseVisualStyleBackColor = true;
             this.moveButton.Click += new System.EventHandler(this.MoveButton_Click);
             // 
-            // editButton
-            // 
-            this.editButton.Location = new System.Drawing.Point(162, 3);
-            this.editButton.Name = "editButton";
-            this.editButton.Size = new System.Drawing.Size(153, 38);
-            this.editButton.TabIndex = 1;
-            this.editButton.Text = "Edit (F4)";
-            this.editButton.UseVisualStyleBackColor = true;
-            this.editButton.Click += new System.EventHandler(this.EditButton_Click);
-            // 
             // viewButton
             // 
             this.viewButton.Location = new System.Drawing.Point(3, 3);
             this.viewButton.Name = "viewButton";
-            this.viewButton.Size = new System.Drawing.Size(153, 38);
+            this.viewButton.Size = new System.Drawing.Size(150, 38);
             this.viewButton.TabIndex = 0;
             this.viewButton.Text = "View (F3)";
             this.viewButton.UseVisualStyleBackColor = true;
             this.viewButton.Click += new System.EventHandler(this.ViewButton_Click);
+            // 
+            // deleteButton
+            // 
+            this.deleteButton.Location = new System.Drawing.Point(783, 3);
+            this.deleteButton.Name = "deleteButton";
+            this.deleteButton.Size = new System.Drawing.Size(150, 38);
+            this.deleteButton.TabIndex = 6;
+            this.deleteButton.Text = "Delete (F8)";
+            this.deleteButton.UseVisualStyleBackColor = true;
+            this.deleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
+            // 
+            // copyButton
+            // 
+            this.copyButton.Location = new System.Drawing.Point(315, 3);
+            this.copyButton.Name = "copyButton";
+            this.copyButton.Size = new System.Drawing.Size(150, 38);
+            this.copyButton.TabIndex = 7;
+            this.copyButton.Text = "Copy (F5)";
+            this.copyButton.UseVisualStyleBackColor = true;
+            this.copyButton.Click += new System.EventHandler(this.CopyButton_Click);
+            // 
+            // editButton
+            // 
+            this.editButton.Location = new System.Drawing.Point(159, 3);
+            this.editButton.Name = "editButton";
+            this.editButton.Size = new System.Drawing.Size(150, 38);
+            this.editButton.TabIndex = 1;
+            this.editButton.Text = "Edit (F4)";
+            this.editButton.UseVisualStyleBackColor = true;
+            this.editButton.Click += new System.EventHandler(this.EditButton_Click);
             // 
             // largeIcon
             // 
             this.largeIcon.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("largeIcon.ImageStream")));
             this.largeIcon.TransparentColor = System.Drawing.Color.Transparent;
             this.largeIcon.Images.SetKeyName(0, "folder.png");
+            this.largeIcon.Images.SetKeyName(1, "enter.png");
             // 
             // smallIcon
             // 
             this.smallIcon.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("smallIcon.ImageStream")));
             this.smallIcon.TransparentColor = System.Drawing.Color.Transparent;
             this.smallIcon.Images.SetKeyName(0, "folder.png");
+            this.smallIcon.Images.SetKeyName(1, "enter.png");
             // 
             // toolBar
             // 
@@ -470,7 +499,7 @@
             this.refreshButton});
             this.toolBar.Location = new System.Drawing.Point(0, 24);
             this.toolBar.Name = "toolBar";
-            this.toolBar.Size = new System.Drawing.Size(817, 25);
+            this.toolBar.Size = new System.Drawing.Size(947, 25);
             this.toolBar.TabIndex = 4;
             this.toolBar.Text = "toolStrip1";
             // 
@@ -514,25 +543,11 @@
             this.refreshButton.Text = "Refresh";
             this.refreshButton.Click += new System.EventHandler(this.ToolStripButton1_Click);
             // 
-            // GoRoot1
-            // 
-            this.GoRoot1.Name = "GoRoot1";
-            this.GoRoot1.Size = new System.Drawing.Size(32, 22);
-            this.GoRoot1.Text = "Root";
-            this.GoRoot1.Click += new System.EventHandler(this.GoRoot1_Click);
-            // 
-            // GoRoot2
-            // 
-            this.GoRoot2.Name = "GoRoot2";
-            this.GoRoot2.Size = new System.Drawing.Size(35, 22);
-            this.GoRoot2.Text = "Root ";
-            this.GoRoot2.Click += new System.EventHandler(this.GoRoot2_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(817, 504);
+            this.ClientSize = new System.Drawing.Size(947, 504);
             this.Controls.Add(this.toolBar);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.tableLayoutPanel1);
@@ -587,7 +602,6 @@
         private System.Windows.Forms.ToolStripComboBox ComboBox1;
         private System.Windows.Forms.ToolStripLabel Label1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.Button deleteButton;
         private System.Windows.Forms.Button folderButton;
         private System.Windows.Forms.Button moveButton;
         private System.Windows.Forms.Button editButton;
@@ -614,6 +628,8 @@
         private System.Windows.Forms.ToolStripButton refreshButton;
         private System.Windows.Forms.ToolStripLabel GoRoot1;
         private System.Windows.Forms.ToolStripLabel GoRoot2;
+        private System.Windows.Forms.Button deleteButton;
+        private System.Windows.Forms.Button copyButton;
     }
 }
 
