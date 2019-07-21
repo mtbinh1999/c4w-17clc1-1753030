@@ -14,7 +14,7 @@ namespace TotalCommander
     public partial class Form1 : Form
     {
         private enum isFocus {Left, Right};
-        private isFocus focusOn = isFocus.Left;
+        private isFocus focusOn;
 
         public Form1()
         {
@@ -136,6 +136,7 @@ namespace TotalCommander
             createComboBox();
             createListView1();
             createListView2();
+            focusOn = isFocus.Left;
         }
 
         private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -288,6 +289,27 @@ namespace TotalCommander
             MessageBox.Show(Application.StartupPath);
             FileInfo file = new FileInfo(Application.StartupPath + "\\HelpMenu.pdf");
             System.Diagnostics.Process.Start(file.FullName);
+        }
+
+        private void ListButton_Click(object sender, EventArgs e)
+        {
+            if (focusOn == isFocus.Left)
+                listViewLeft.View = View.List;
+            else listViewRight.View = View.List;
+        }
+
+        private void DetailButton_Click(object sender, EventArgs e)
+        {
+            if (focusOn == isFocus.Left)
+                listViewLeft.View = View.Details;
+            else listViewRight.View = View.Details;
+        }
+
+        private void IconButton_Click(object sender, EventArgs e)
+        {
+            if (focusOn == isFocus.Left)
+                listViewLeft.View = View.LargeIcon;
+            else listViewRight.View = View.LargeIcon;
         }
     }
 }
