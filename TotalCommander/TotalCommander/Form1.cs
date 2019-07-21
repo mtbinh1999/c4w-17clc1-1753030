@@ -399,6 +399,22 @@ namespace TotalCommander
                     }
                 }
             }
+            else
+            {
+                if (listViewRight.SelectedItems.Count > 0)
+                {
+                    if (listViewRight.SelectedItems[0].Tag.GetType() == typeof(DirectoryInfo))
+                    {
+                        MessageBox.Show("This's a folder");
+                    }
+                    else
+                    {
+                        FileInfo file = (FileInfo)listViewRight.SelectedItems[0].Tag;
+                        ViewForm f = new ViewForm(file.FullName);
+                        f.ShowDialog();
+                    }
+                }
+            }
         }
 
         private void EditButton_Click(object sender, EventArgs e)
@@ -419,6 +435,16 @@ namespace TotalCommander
         private void DeleteButton_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void ListViewRight_Click(object sender, EventArgs e)
+        {
+            focusOn = isFocus.Right;
+        }
+
+        private void ListViewLeft_Click(object sender, EventArgs e)
+        {
+            focusOn = isFocus.Left;
         }
     }
 }

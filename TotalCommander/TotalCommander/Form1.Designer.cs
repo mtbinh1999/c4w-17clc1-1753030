@@ -229,6 +229,7 @@
             this.listViewLeft.UseCompatibleStateImageBehavior = false;
             this.listViewLeft.View = System.Windows.Forms.View.Details;
             this.listViewLeft.ItemActivate += new System.EventHandler(this.ListViewLeft_ItemActivate);
+            this.listViewLeft.Click += new System.EventHandler(this.ListViewLeft_Click);
             // 
             // colNameL
             // 
@@ -311,6 +312,7 @@
             this.listViewRight.UseCompatibleStateImageBehavior = false;
             this.listViewRight.View = System.Windows.Forms.View.Details;
             this.listViewRight.ItemActivate += new System.EventHandler(this.ListViewRight_ItemActivate);
+            this.listViewRight.Click += new System.EventHandler(this.ListViewRight_Click);
             // 
             // colNameR
             // 
