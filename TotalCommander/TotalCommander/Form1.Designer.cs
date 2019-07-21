@@ -210,7 +210,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.2F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 85.33334F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(817, 401);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(817, 421);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
             // listViewLeft
@@ -222,9 +222,9 @@
             this.colDateL,
             this.colAttrL});
             this.listViewLeft.HideSelection = false;
-            this.listViewLeft.Location = new System.Drawing.Point(3, 61);
+            this.listViewLeft.Location = new System.Drawing.Point(3, 65);
             this.listViewLeft.Name = "listViewLeft";
-            this.listViewLeft.Size = new System.Drawing.Size(394, 315);
+            this.listViewLeft.Size = new System.Drawing.Size(402, 340);
             this.listViewLeft.TabIndex = 8;
             this.listViewLeft.UseCompatibleStateImageBehavior = false;
             this.listViewLeft.View = System.Windows.Forms.View.Details;
@@ -257,7 +257,7 @@
             this.Right2.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.Right2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TextBox2});
-            this.Right2.Location = new System.Drawing.Point(408, 30);
+            this.Right2.Location = new System.Drawing.Point(408, 32);
             this.Right2.Name = "Right2";
             this.Right2.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.Right2.Size = new System.Drawing.Size(409, 25);
@@ -305,9 +305,9 @@
             this.colDateR,
             this.colAttrR});
             this.listViewRight.HideSelection = false;
-            this.listViewRight.Location = new System.Drawing.Point(411, 61);
+            this.listViewRight.Location = new System.Drawing.Point(411, 65);
             this.listViewRight.Name = "listViewRight";
-            this.listViewRight.Size = new System.Drawing.Size(394, 315);
+            this.listViewRight.Size = new System.Drawing.Size(403, 337);
             this.listViewRight.TabIndex = 2;
             this.listViewRight.UseCompatibleStateImageBehavior = false;
             this.listViewRight.View = System.Windows.Forms.View.Details;
@@ -366,7 +366,7 @@
             this.Left2.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.Left2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TextBox1});
-            this.Left2.Location = new System.Drawing.Point(0, 30);
+            this.Left2.Location = new System.Drawing.Point(0, 32);
             this.Left2.Name = "Left2";
             this.Left2.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.Left2.Size = new System.Drawing.Size(408, 25);
@@ -392,18 +392,18 @@
             this.tableLayoutPanel2.Controls.Add(this.moveButton, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.editButton, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.viewButton, 0, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 433);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 459);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(797, 40);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(797, 44);
             this.tableLayoutPanel2.TabIndex = 3;
             // 
             // deleteButton
             // 
             this.deleteButton.Location = new System.Drawing.Point(639, 3);
             this.deleteButton.Name = "deleteButton";
-            this.deleteButton.Size = new System.Drawing.Size(153, 34);
+            this.deleteButton.Size = new System.Drawing.Size(153, 38);
             this.deleteButton.TabIndex = 4;
             this.deleteButton.Text = "Delete (F8)";
             this.deleteButton.UseVisualStyleBackColor = true;
@@ -413,7 +413,7 @@
             // 
             this.folderButton.Location = new System.Drawing.Point(480, 3);
             this.folderButton.Name = "folderButton";
-            this.folderButton.Size = new System.Drawing.Size(153, 34);
+            this.folderButton.Size = new System.Drawing.Size(153, 38);
             this.folderButton.TabIndex = 3;
             this.folderButton.Text = "Folder (F7)";
             this.folderButton.UseVisualStyleBackColor = true;
@@ -423,7 +423,7 @@
             // 
             this.moveButton.Location = new System.Drawing.Point(321, 3);
             this.moveButton.Name = "moveButton";
-            this.moveButton.Size = new System.Drawing.Size(153, 34);
+            this.moveButton.Size = new System.Drawing.Size(153, 38);
             this.moveButton.TabIndex = 2;
             this.moveButton.Text = "Move (F6)";
             this.moveButton.UseVisualStyleBackColor = true;
@@ -433,7 +433,7 @@
             // 
             this.editButton.Location = new System.Drawing.Point(162, 3);
             this.editButton.Name = "editButton";
-            this.editButton.Size = new System.Drawing.Size(153, 34);
+            this.editButton.Size = new System.Drawing.Size(153, 38);
             this.editButton.TabIndex = 1;
             this.editButton.Text = "Edit (F4)";
             this.editButton.UseVisualStyleBackColor = true;
@@ -443,7 +443,7 @@
             // 
             this.viewButton.Location = new System.Drawing.Point(3, 3);
             this.viewButton.Name = "viewButton";
-            this.viewButton.Size = new System.Drawing.Size(153, 34);
+            this.viewButton.Size = new System.Drawing.Size(153, 38);
             this.viewButton.TabIndex = 0;
             this.viewButton.Text = "View (F3)";
             this.viewButton.UseVisualStyleBackColor = true;
@@ -532,7 +532,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(817, 484);
+            this.ClientSize = new System.Drawing.Size(817, 504);
             this.Controls.Add(this.toolBar);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.tableLayoutPanel1);

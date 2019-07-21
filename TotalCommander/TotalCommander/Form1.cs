@@ -419,17 +419,122 @@ namespace TotalCommander
 
         private void EditButton_Click(object sender, EventArgs e)
         {
-
+            if(focusOn == isFocus.Left)
+            {
+                if (listViewLeft.SelectedItems.Count > 0)
+                {
+                    if (listViewLeft.SelectedItems[0].Tag.GetType() == typeof(DirectoryInfo))
+                    {
+                        MessageBox.Show("This's a folder");
+                    }
+                    else
+                    {
+                        FileInfo file = (FileInfo)listViewLeft.SelectedItems[0].Tag;
+                        System.Diagnostics.Process.Start(file.FullName);
+                    }
+                }
+            }
+            else
+            {
+                if (listViewRight.SelectedItems.Count > 0)
+                {
+                    if (listViewRight.SelectedItems[0].Tag.GetType() == typeof(DirectoryInfo))
+                    {
+                        MessageBox.Show("This's a folder");
+                    }
+                    else
+                    {
+                        FileInfo file = (FileInfo)listViewRight.SelectedItems[0].Tag;
+                        System.Diagnostics.Process.Start(file.FullName);
+                    }
+                }
+            }
         }
 
         private void MoveButton_Click(object sender, EventArgs e)
         {
+            if(focusOn == isFocus.Left)
+            {
+                if(listViewLeft.SelectedItems.Count > 0)
+                {
+                    MessageBox.Show(string.Format("{0}", listViewLeft.SelectedItems.Count));
+                }
+            }
+            else
+            {
 
+            }
         }
 
         private void FolderButton_Click(object sender, EventArgs e)
         {
+            if(focusOn == isFocus.Left)
+            {
+                int i = 1;
+                if((curDirLeft.Attributes & FileAttributes.ReadOnly) != FileAttributes.ReadOnly)
+                {
+                    DirectoryInfo dir = new DirectoryInfo(curDirLeft.FullName + "\\New Folder");
+                    if(!dir.Exists)
+                    {
+                        Directory.CreateDirectory(curDirLeft.FullName + "\\New Folder");
+                        return;
+                    }
+                    else
+                    {
+                        while (true)
+                        {
+                            DirectoryInfo edir = new DirectoryInfo(curDirLeft.FullName + string.Format("New Folder ({0})", i));
+                            if(!edir.Exists)
+                            {
+                                Directory.CreateDirectory(curDirLeft.FullName + string.Format("New Folder ({0})", i));
+                                return;
+                            }
+                            i++;
+                        }
+                    }
+                    
+                    
+                }
+                else
+                {
+                    MessageBox.Show("This folder is ReadOnly");
+                    return;
+                }
+            }
+            else
+            {
+                MessageBox.Show(curDirRight.FullName);
+                int i = 1;
+                if ((curDirRight.Attributes & FileAttributes.ReadOnly) != FileAttributes.ReadOnly)
+                {
+                    DirectoryInfo dir = new DirectoryInfo(curDirRight.FullName + "\\New Folder");
+                    if (!dir.Exists)
+                    {
+                        Directory.CreateDirectory(curDirRight.FullName + "\\New Folder");
+                        return;
+                    }
+                    else
+                    {
+                        while (true)
+                        {
+                            DirectoryInfo edir = new DirectoryInfo(curDirRight.FullName + string.Format("New Folder ({0})", i));
+                            if (!edir.Exists)
+                            {
+                                Directory.CreateDirectory(curDirRight.FullName + string.Format("New Folder ({0})", i));
+                                return;
+                            }
+                            i++;
+                        }
+                    }
 
+
+                }
+                else
+                {
+                    MessageBox.Show("This folder is ReadOnly");
+                    return;
+                }
+            }
         }
 
         private void DeleteButton_Click(object sender, EventArgs e)
