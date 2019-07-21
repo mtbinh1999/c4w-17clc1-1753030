@@ -38,9 +38,6 @@ namespace TotalCommander
         private void createListView1()
         {
             listViewLeft.Items.Clear();
-            ListViewItem root = new ListViewItem(":", 1);
-            root.Tag = curDirLeft;
-            listViewLeft.Items.Add(root);
             DirectoryInfo ourDir = new DirectoryInfo(ComboBox1.SelectedItem.ToString());
             listViewLeft.LargeImageList = largeIcon;
             listViewLeft.SmallImageList = smallIcon;
@@ -93,9 +90,6 @@ namespace TotalCommander
         private void createListView2()
         {
             listViewRight.Items.Clear();
-            ListViewItem root = new ListViewItem(":", 1);
-            root.Tag = curDirRight;
-            listViewRight.Items.Add(root);
             DirectoryInfo ourDir = new DirectoryInfo(ComboBox2.SelectedItem.ToString());
             listViewRight.LargeImageList = largeIcon;
             listViewRight.SmallImageList = smallIcon;
@@ -190,9 +184,6 @@ namespace TotalCommander
         private void openDirectoryLeft()
         {
             listViewLeft.Items.Clear();
-            ListViewItem root = new ListViewItem(":", 1);
-            root.Tag = curDirLeft;
-            listViewLeft.Items.Add(root);
             foreach (FileInfo file in curDirLeft.GetFiles())
             {
                 if ((file.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
@@ -232,9 +223,6 @@ namespace TotalCommander
         private void openDirectoryRight()
         {
             listViewRight.Items.Clear();
-            ListViewItem root = new ListViewItem(":", 1);
-            root.Tag = curDirRight;
-            listViewRight.Items.Add(root);
             foreach (FileInfo file in curDirRight.GetFiles())
             {
                 if ((file.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
@@ -747,6 +735,254 @@ namespace TotalCommander
             focusOn = isFocus.Left;
         }
 
-        
+        private void ViewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (focusOn == isFocus.Left)
+            {
+                if (listViewLeft.SelectedItems.Count > 0)
+                {
+                    if (listViewLeft.SelectedItems[0].Tag.GetType() == typeof(DirectoryInfo))
+                    {
+                        MessageBox.Show("This's a folder");
+                    }
+                    else
+                    {
+                        FileInfo file = (FileInfo)listViewLeft.SelectedItems[0].Tag;
+                        ViewForm f = new ViewForm(file.FullName);
+                        f.ShowDialog();
+                    }
+                }
+            }
+            else
+            {
+                if (listViewRight.SelectedItems.Count > 0)
+                {
+                    if (listViewRight.SelectedItems[0].Tag.GetType() == typeof(DirectoryInfo))
+                    {
+                        MessageBox.Show("This's a folder");
+                    }
+                    else
+                    {
+                        FileInfo file = (FileInfo)listViewRight.SelectedItems[0].Tag;
+                        ViewForm f = new ViewForm(file.FullName);
+                        f.ShowDialog();
+                    }
+                }
+            }
+        }
+
+        private void EditToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (focusOn == isFocus.Left)
+            {
+                if (listViewLeft.SelectedItems.Count > 0)
+                {
+                    if (listViewLeft.SelectedItems[0].Tag.GetType() == typeof(DirectoryInfo))
+                    {
+                        MessageBox.Show("This's a folder");
+                    }
+                    else
+                    {
+                        FileInfo file = (FileInfo)listViewLeft.SelectedItems[0].Tag;
+                        System.Diagnostics.Process.Start(file.FullName);
+                    }
+                }
+            }
+            else
+            {
+                if (listViewRight.SelectedItems.Count > 0)
+                {
+                    if (listViewRight.SelectedItems[0].Tag.GetType() == typeof(DirectoryInfo))
+                    {
+                        MessageBox.Show("This's a folder");
+                    }
+                    else
+                    {
+                        FileInfo file = (FileInfo)listViewRight.SelectedItems[0].Tag;
+                        System.Diagnostics.Process.Start(file.FullName);
+                    }
+                }
+            }
+        }
+
+        private void NewFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (focusOn == isFocus.Left)
+            {
+                int i = 1;
+                if ((curDirLeft.Attributes & FileAttributes.ReadOnly) != FileAttributes.ReadOnly)
+                {
+                    DirectoryInfo dir = new DirectoryInfo(curDirLeft.FullName + "\\New Folder");
+                    if (!dir.Exists)
+                    {
+                        Directory.CreateDirectory(curDirLeft.FullName + "\\New Folder");
+                        refreshListView();
+                        return;
+                    }
+                    else
+                    {
+                        while (true)
+                        {
+                            DirectoryInfo edir = new DirectoryInfo(curDirLeft.FullName + string.Format("New Folder ({0})", i));
+                            if (!edir.Exists)
+                            {
+                                Directory.CreateDirectory(curDirLeft.FullName + string.Format("New Folder ({0})", i));
+                                refreshListView();
+                                return;
+                            }
+                            i++;
+                        }
+                    }
+
+
+                }
+                else
+                {
+                    MessageBox.Show("This folder is ReadOnly");
+                    return;
+                }
+            }
+            else
+            {
+                int i = 1;
+                if ((curDirRight.Attributes & FileAttributes.ReadOnly) != FileAttributes.ReadOnly)
+                {
+                    DirectoryInfo dir = new DirectoryInfo(curDirRight.FullName + "\\New Folder");
+                    if (!dir.Exists)
+                    {
+                        Directory.CreateDirectory(curDirRight.FullName + "\\New Folder");
+                        refreshListView();
+                        return;
+                    }
+                    else
+                    {
+                        while (true)
+                        {
+                            DirectoryInfo edir = new DirectoryInfo(curDirRight.FullName + string.Format("New Folder ({0})", i));
+                            if (!edir.Exists)
+                            {
+                                Directory.CreateDirectory(curDirRight.FullName + string.Format("New Folder ({0})", i));
+                                refreshListView();
+                                return;
+                            }
+                            i++;
+                        }
+                    }
+
+
+                }
+                else
+                {
+                    MessageBox.Show("This folder is ReadOnly");
+                    return;
+                }
+            }
+        }
+
+        private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (focusOn == isFocus.Left)
+            {
+                if (listViewLeft.SelectedItems.Count > 0)
+                {
+                    DialogResult dlr = MessageBox.Show("Confirm Delete!", "Delete Option", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                    if (dlr == DialogResult.Cancel)
+                        return;
+                    for (int i = 0; i < listViewLeft.SelectedItems.Count; i++)
+                    {
+                        if (listViewLeft.SelectedItems[i].Tag.GetType() == typeof(DirectoryInfo))
+                        {
+                            DirectoryInfo dir = (DirectoryInfo)listViewLeft.SelectedItems[i].Tag;
+                            if (checkExitsFile(dir))
+                            {
+                                dlr = MessageBox.Show(dir.Name + " contains items! Want to delete?", "Contains item!", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                                if (dlr == DialogResult.Cancel)
+                                    break;
+                                try { dir.Delete(true); refreshListView(); }
+                                catch (IOException er)
+                                {
+                                    MessageBox.Show(er.Message);
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                try { dir.Delete(true); }
+                                catch (IOException er)
+                                {
+                                    MessageBox.Show(er.Message);
+                                    return;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            FileInfo file = (FileInfo)listViewLeft.SelectedItems[i].Tag;
+                            try { file.Delete(); refreshListView(); }
+                            catch (IOException er)
+                            {
+                                MessageBox.Show(er.Message);
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (listViewRight.SelectedItems.Count > 0)
+                {
+                    DialogResult dlr = MessageBox.Show("Confirm Delete!", "Delete Option", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                    if (dlr == DialogResult.Cancel)
+                        return;
+                    for (int i = 0; i < listViewRight.SelectedItems.Count; i++)
+                    {
+                        if (listViewRight.SelectedItems[i].Tag.GetType() == typeof(DirectoryInfo))
+                        {
+                            DirectoryInfo dir = (DirectoryInfo)listViewRight.SelectedItems[i].Tag;
+                            if (checkExitsFile(dir))
+                            {
+                                dlr = MessageBox.Show(dir.Name + " contains items! Want to delete?", "Contains item!", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                                if (dlr == DialogResult.Cancel)
+                                    break;
+                                try { dir.Delete(true); refreshListView(); }
+                                catch (IOException er)
+                                {
+                                    MessageBox.Show(er.Message);
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                try { dir.Delete(true); refreshListView(); }
+                                catch (IOException er)
+                                {
+                                    MessageBox.Show(er.Message);
+                                    return;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            FileInfo file = (FileInfo)listViewRight.SelectedItems[i].Tag;
+                            try { file.Delete(); }
+                            catch (IOException er)
+                            {
+                                MessageBox.Show(er.Message);
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+            Application.ExitThread();
+            this.Close();
+            this.Dispose();
+        }
     }
 }
