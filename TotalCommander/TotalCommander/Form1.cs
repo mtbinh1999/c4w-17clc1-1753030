@@ -537,9 +537,118 @@ namespace TotalCommander
             }
         }
 
+        private bool checkExitsFile(DirectoryInfo dir)
+        {
+            int i = 0;
+            foreach(DirectoryInfo subdir in dir.GetDirectories())
+            {
+                i++;
+            }
+            foreach(FileInfo file in dir.GetFiles())
+            {
+                i++;
+            }
+            if (i != 0)
+                return true;
+            return false;
+        }
+
         private void DeleteButton_Click(object sender, EventArgs e)
         {
-
+            if(focusOn == isFocus.Left)
+            {
+                if(listViewLeft.SelectedItems.Count > 0)
+                {
+                    DialogResult dlr = MessageBox.Show("Confirm Delete!", "Delete Option", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                    if (dlr == DialogResult.Cancel)
+                        return;
+                    for(int i = 0; i < listViewLeft.SelectedItems.Count; i++)
+                    {
+                        if(listViewLeft.SelectedItems[i].Tag.GetType() == typeof(DirectoryInfo))
+                        {
+                            DirectoryInfo dir = (DirectoryInfo)listViewLeft.SelectedItems[i].Tag;
+                            if (checkExitsFile(dir))
+                            {
+                                dlr = MessageBox.Show("Confirm Delete Folder contains items!", "Contains item!", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                                if (dlr == DialogResult.Cancel)
+                                    break;
+                                try { dir.Delete(true); }
+                                catch (IOException er)
+                                {
+                                    MessageBox.Show(er.Message);
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                try { dir.Delete(true); }
+                                catch (IOException er)
+                                {
+                                    MessageBox.Show(er.Message);
+                                    return;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            FileInfo file = (FileInfo)listViewLeft.SelectedItems[i].Tag;
+                            try { file.Delete(); }
+                            catch(IOException er)
+                            {
+                                MessageBox.Show(er.Message);
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (listViewRight.SelectedItems.Count > 0)
+                {
+                    DialogResult dlr = MessageBox.Show("Confirm Delete!", "Delete Option", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                    if (dlr == DialogResult.Cancel)
+                        return;
+                    for (int i = 0; i < listViewRight.SelectedItems.Count; i++)
+                    {
+                        if (listViewRight.SelectedItems[i].Tag.GetType() == typeof(DirectoryInfo))
+                        {
+                            DirectoryInfo dir = (DirectoryInfo)listViewRight.SelectedItems[i].Tag;
+                            if (checkExitsFile(dir))
+                            {
+                                dlr = MessageBox.Show("Confirm Delete Folder contains items!", "Contains item!", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                                if (dlr == DialogResult.Cancel)
+                                    break;
+                                try { dir.Delete(true); }
+                                catch (IOException er)
+                                {
+                                    MessageBox.Show(er.Message);
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                try { dir.Delete(true); }
+                                catch (IOException er)
+                                {
+                                    MessageBox.Show(er.Message);
+                                    return;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            FileInfo file = (FileInfo)listViewRight.SelectedItems[i].Tag;
+                            try { file.Delete(); }
+                            catch (IOException er)
+                            {
+                                MessageBox.Show(er.Message);
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private void ListViewRight_Click(object sender, EventArgs e)
