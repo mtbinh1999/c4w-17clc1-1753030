@@ -39,7 +39,8 @@ namespace TotalCommander
         {
             listViewLeft.Items.Clear();
             ListViewItem root = new ListViewItem(":", 1);
-            root.Tag = curDirRight;
+            root.Tag = curDirLeft;
+            listViewLeft.Items.Add(root);
             DirectoryInfo ourDir = new DirectoryInfo(ComboBox1.SelectedItem.ToString());
             listViewLeft.LargeImageList = largeIcon;
             listViewLeft.SmallImageList = smallIcon;
@@ -92,6 +93,9 @@ namespace TotalCommander
         private void createListView2()
         {
             listViewRight.Items.Clear();
+            ListViewItem root = new ListViewItem(":", 1);
+            root.Tag = curDirRight;
+            listViewRight.Items.Add(root);
             DirectoryInfo ourDir = new DirectoryInfo(ComboBox2.SelectedItem.ToString());
             listViewRight.LargeImageList = largeIcon;
             listViewRight.SmallImageList = smallIcon;
@@ -186,6 +190,9 @@ namespace TotalCommander
         private void openDirectoryLeft()
         {
             listViewLeft.Items.Clear();
+            ListViewItem root = new ListViewItem(":", 1);
+            root.Tag = curDirLeft;
+            listViewLeft.Items.Add(root);
             foreach (FileInfo file in curDirLeft.GetFiles())
             {
                 if ((file.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
@@ -225,6 +232,9 @@ namespace TotalCommander
         private void openDirectoryRight()
         {
             listViewRight.Items.Clear();
+            ListViewItem root = new ListViewItem(":", 1);
+            root.Tag = curDirRight;
+            listViewRight.Items.Add(root);
             foreach (FileInfo file in curDirRight.GetFiles())
             {
                 if ((file.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
