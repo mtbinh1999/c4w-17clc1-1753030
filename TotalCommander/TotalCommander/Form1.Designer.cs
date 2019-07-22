@@ -81,7 +81,7 @@
             this.listButton = new System.Windows.Forms.ToolStripButton();
             this.detailButton = new System.Windows.Forms.ToolStripButton();
             this.iconButton = new System.Windows.Forms.ToolStripButton();
-            this.refreshButton = new System.Windows.Forms.ToolStripButton();
+            this.refButton = new System.Windows.Forms.ToolStripButton();
             this.menu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.Right2.SuspendLayout();
@@ -123,14 +123,14 @@
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.viewToolStripMenuItem.Text = "View";
             this.viewToolStripMenuItem.Click += new System.EventHandler(this.ViewToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.editToolStripMenuItem.Text = "Edit";
             this.editToolStripMenuItem.Click += new System.EventHandler(this.EditToolStripMenuItem_Click);
             // 
@@ -149,14 +149,14 @@
             // newFolderToolStripMenuItem
             // 
             this.newFolderToolStripMenuItem.Name = "newFolderToolStripMenuItem";
-            this.newFolderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newFolderToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.newFolderToolStripMenuItem.Text = "New Folder";
             this.newFolderToolStripMenuItem.Click += new System.EventHandler(this.NewFolderToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.DeleteToolStripMenuItem_Click);
             // 
@@ -169,7 +169,7 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
@@ -227,6 +227,7 @@
             this.colSizeL,
             this.colDateL,
             this.colAttrL});
+            this.listViewLeft.FullRowSelect = true;
             this.listViewLeft.HideSelection = false;
             this.listViewLeft.Location = new System.Drawing.Point(3, 65);
             this.listViewLeft.Name = "listViewLeft";
@@ -317,6 +318,7 @@
             this.colSizeR,
             this.colDateR,
             this.colAttrR});
+            this.listViewRight.FullRowSelect = true;
             this.listViewRight.HideSelection = false;
             this.listViewRight.Location = new System.Drawing.Point(476, 65);
             this.listViewRight.Name = "listViewRight";
@@ -501,7 +503,7 @@
             this.listButton,
             this.detailButton,
             this.iconButton,
-            this.refreshButton});
+            this.refButton});
             this.toolBar.Location = new System.Drawing.Point(0, 24);
             this.toolBar.Name = "toolBar";
             this.toolBar.Size = new System.Drawing.Size(947, 25);
@@ -538,15 +540,15 @@
             this.iconButton.Text = "Icon View";
             this.iconButton.Click += new System.EventHandler(this.IconButton_Click);
             // 
-            // refreshButton
+            // refButton
             // 
-            this.refreshButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.refreshButton.Image = ((System.Drawing.Image)(resources.GetObject("refreshButton.Image")));
-            this.refreshButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.refreshButton.Name = "refreshButton";
-            this.refreshButton.Size = new System.Drawing.Size(23, 22);
-            this.refreshButton.Text = "Refresh";
-            this.refreshButton.Click += new System.EventHandler(this.ToolStripButton1_Click);
+            this.refButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.refButton.Image = ((System.Drawing.Image)(resources.GetObject("refButton.Image")));
+            this.refButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.refButton.Name = "refButton";
+            this.refButton.Size = new System.Drawing.Size(23, 22);
+            this.refButton.Text = "Refresh";
+            this.refButton.Click += new System.EventHandler(this.refButton_Click);
             // 
             // Form1
             // 
@@ -630,7 +632,7 @@
         private System.Windows.Forms.ToolStripButton listButton;
         private System.Windows.Forms.ToolStripButton detailButton;
         private System.Windows.Forms.ToolStripButton iconButton;
-        private System.Windows.Forms.ToolStripButton refreshButton;
+        private System.Windows.Forms.ToolStripButton refButton;
         private System.Windows.Forms.ToolStripLabel GoRoot1;
         private System.Windows.Forms.ToolStripLabel GoRoot2;
         private System.Windows.Forms.Button deleteButton;

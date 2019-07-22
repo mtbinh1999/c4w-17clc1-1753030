@@ -41,6 +41,9 @@ namespace TotalCommander
             DirectoryInfo ourDir = new DirectoryInfo(ComboBox1.SelectedItem.ToString());
             listViewLeft.LargeImageList = largeIcon;
             listViewLeft.SmallImageList = smallIcon;
+            ListViewItem root = new ListViewItem("..", 1);
+            root.Tag = curDirLeft;
+            listViewLeft.Items.Add(root);
             TextBox1.Text = ourDir.FullName;
             curDirLeft = ourDir;
             rootLeft = ourDir;
@@ -93,7 +96,9 @@ namespace TotalCommander
             DirectoryInfo ourDir = new DirectoryInfo(ComboBox2.SelectedItem.ToString());
             listViewRight.LargeImageList = largeIcon;
             listViewRight.SmallImageList = smallIcon;
-            //largeIcon.Images.Add("folder", Image.FromFile(Application.StartupPath + "\\Image\folder.png"));
+            ListViewItem root = new ListViewItem("..", 1);
+            root.Tag = curDirRight;
+            listViewRight.Items.Add(root);
             TextBox2.Text = ourDir.FullName;
             curDirRight = ourDir;
             rootRight = ourDir;
@@ -184,6 +189,12 @@ namespace TotalCommander
         private void openDirectoryLeft()
         {
             listViewLeft.Items.Clear();
+            ListViewItem root = new ListViewItem("..", 1);
+            if (curDirLeft.Parent != null)
+                root.Tag = curDirLeft.Parent;
+            else root.Tag = curDirLeft;
+            listViewLeft.Items.Add(root);
+
             foreach (FileInfo file in curDirLeft.GetFiles())
             {
                 if ((file.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
@@ -223,6 +234,13 @@ namespace TotalCommander
         private void openDirectoryRight()
         {
             listViewRight.Items.Clear();
+
+            ListViewItem root = new ListViewItem("..", 1);
+            if (curDirRight.Parent != null)
+                root.Tag = curDirRight.Parent;
+            else root.Tag = curDirRight;
+            listViewRight.Items.Add(root);
+
             foreach (FileInfo file in curDirRight.GetFiles())
             {
                 if ((file.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
@@ -353,7 +371,7 @@ namespace TotalCommander
         {
             if (e.KeyCode == Keys.Enter)
             {
-                DirectoryInfo dir = new DirectoryInfo(TextBox1.Text.ToString());
+                DirectoryInfo dir = new DirectoryInfo(TextBox2.Text.ToString());
                 if (dir.Exists)
                 {
                     curDirRight = dir;
@@ -368,7 +386,7 @@ namespace TotalCommander
             openDirectoryLeft();
             openDirectoryRight();
         }
-        private void ToolStripButton1_Click(object sender, EventArgs e)
+        private void refButton_Click(object sender, EventArgs e)
         {
             if (focusOn == isFocus.Left)
                 openDirectoryLeft();
@@ -723,6 +741,7 @@ namespace TotalCommander
                     }
                 }
             }
+            refreshListView();
         }
 
         private void ListViewRight_Click(object sender, EventArgs e)
@@ -877,6 +896,7 @@ namespace TotalCommander
                     return;
                 }
             }
+            refreshListView();
         }
 
         private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -975,6 +995,7 @@ namespace TotalCommander
                     }
                 }
             }
+            refreshListView();
         }
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
