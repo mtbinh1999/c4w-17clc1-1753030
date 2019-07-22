@@ -16,6 +16,7 @@ namespace TotalCommander
     {
         private enum isFocus {Left, Right};
         private isFocus focusOn;
+        public string editor = "notepad.exe";
         DirectoryInfo curDirLeft;
         DirectoryInfo curDirRight;
         DirectoryInfo rootLeft;
@@ -52,7 +53,7 @@ namespace TotalCommander
             {
                 foreach(FileInfo file in ourDir.GetFiles())
                 {
-                    if((file.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
+                    if((file.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden || showHidden)
                     { 
                         if(!largeIcon.Images.Keys.Contains(file.Extension))
                         {
@@ -72,7 +73,7 @@ namespace TotalCommander
 
                 foreach (DirectoryInfo dir in ourDir.GetDirectories())
                 {
-                    if ((dir.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
+                    if ((dir.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden || showHidden)
                     {
                         ListViewItem item = new ListViewItem(dir.Name, 0);
                         item.Tag = dir;
@@ -107,7 +108,7 @@ namespace TotalCommander
             {
                 foreach (FileInfo file in ourDir.GetFiles())
                 {
-                    if ((file.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
+                    if ((file.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden || showHidden)
                     {
                         if (!largeIcon.Images.Keys.Contains(file.Extension))
                         {
@@ -127,7 +128,7 @@ namespace TotalCommander
 
                 foreach (DirectoryInfo dir in ourDir.GetDirectories())
                 {
-                    if ((dir.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
+                    if ((dir.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden || showHidden)
                     {
                         ListViewItem item = new ListViewItem(dir.Name, 0);
                         item.Tag = dir;
@@ -198,7 +199,7 @@ namespace TotalCommander
 
             foreach (FileInfo file in curDirLeft.GetFiles())
             {
-                if ((file.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
+                if ((file.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden || showHidden)
                 {
                     if (!largeIcon.Images.Keys.Contains(file.Extension))
                     {
@@ -218,7 +219,7 @@ namespace TotalCommander
 
             foreach (DirectoryInfo subDir in curDirLeft.GetDirectories())
             {
-                if ((subDir.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
+                if ((subDir.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden || showHidden)
                 {
                     ListViewItem item = new ListViewItem(subDir.Name, 0);
                     item.Tag = subDir;
@@ -244,7 +245,7 @@ namespace TotalCommander
 
             foreach (FileInfo file in curDirRight.GetFiles())
             {
-                if ((file.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
+                if ((file.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden || showHidden)
                 {
                     if (!largeIcon.Images.Keys.Contains(file.Extension))
                     {
@@ -264,7 +265,7 @@ namespace TotalCommander
 
             foreach (DirectoryInfo subDir in curDirRight.GetDirectories())
             {
-                if ((subDir.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
+                if ((subDir.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden || showHidden)
                 {
                     ListViewItem item = new ListViewItem(subDir.Name, 0);
                     item.Tag = subDir;
@@ -325,7 +326,7 @@ namespace TotalCommander
             }
         }
 
-        private void saveFile()
+        private void saveFileHelp()
         {
             Assembly Assemb = Assembly.GetExecutingAssembly();
             Stream stream = Assemb.GetManifestResourceStream("TotalCommander.Resources.HelpMenu.pdf");
@@ -341,7 +342,8 @@ namespace TotalCommander
 
         private void HelpToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            saveFile();
+            if (!File.Exists("HelpMenu.pdf"))
+                saveFileHelp();
             System.Diagnostics.Process.Start("HelpMenu.pdf");
         }
 
@@ -470,7 +472,13 @@ namespace TotalCommander
                     else
                     {
                         FileInfo file = (FileInfo)listViewLeft.SelectedItems[0].Tag;
-                        System.Diagnostics.Process.Start(file.FullName);
+                        try { System.Diagnostics.Process.Start(editor, "\"" + file.FullName + "\""); }
+                        catch (IOException er)
+                        {
+                            MessageBox.Show(er.Message);
+                            MessageBox.Show("Notepad sets as default editor");
+                            editor = "notepad.exe";
+                        }
                     }
                 }
             }
@@ -485,7 +493,13 @@ namespace TotalCommander
                     else
                     {
                         FileInfo file = (FileInfo)listViewRight.SelectedItems[0].Tag;
-                        System.Diagnostics.Process.Start(file.FullName);
+                        try { System.Diagnostics.Process.Start(editor, "\"" + file.FullName + "\""); }
+                        catch (IOException er)
+                        {
+                            MessageBox.Show(er.Message);
+                            MessageBox.Show("Notepad sets as default editor");
+                            editor = "notepad.exe";
+                        }
                     }
                 }
             }
@@ -494,39 +508,29 @@ namespace TotalCommander
         private void CopyFolder(string sourceFolder, string destFolder)
         {
             if (!Directory.Exists(destFolder))
-
                 Directory.CreateDirectory(destFolder);
 
             string[] files = Directory.GetFiles(sourceFolder);
 
             foreach (string file in files)
-
             {
 
                 string name = Path.GetFileName(file);
-
                 string dest = Path.Combine(destFolder, name);
-
                 File.Copy(file, dest);
-
             }
 
             string[] folders = Directory.GetDirectories(sourceFolder);
 
             foreach (string folder in folders)
-
             {
 
                 string name = Path.GetFileName(folder);
-
                 string dest = Path.Combine(destFolder, name);
-
                 CopyFolder(folder, dest);
 
             }
         }
-
-
 
         private void CopyButton_Click(object sender, EventArgs e)
         {
@@ -539,21 +543,96 @@ namespace TotalCommander
                         if(listViewLeft.SelectedItems[i].Tag.GetType() == typeof(DirectoryInfo))
                         {
                             DirectoryInfo dir = (DirectoryInfo)listViewLeft.SelectedItems[i].Tag;
-                            CopyFolder(dir.FullName, curDirRight.FullName);
+                            string name = dir.Name;
+                            string dest = Path.Combine(curDirRight.FullName, name);
+                            if(dir.FullName == curDirRight.FullName)
+                            {
+                                MessageBox.Show("The destination folder is a subfolder the source folder", "Interrupted Action", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                break;
+                            }
+                            CopyFolder(dir.FullName, dest);
                         }
                         else
                         {
                             FileInfo file = (FileInfo)listViewLeft.SelectedItems[i].Tag;
                             string name = Path.GetFileName(file.FullName);
                             string dest = Path.Combine(curDirRight.FullName, name);
-                            File.Copy(file.FullName, dest);
+
+                            if (File.Exists(dest))
+                            {
+                                DialogResult dlr = MessageBox.Show(name + " existed! Do you want to overwrite? Yes (Overwrite), No (Skip)", "Replace file", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                if (dlr == DialogResult.Yes)
+                                {
+                                    try { File.Copy(file.FullName, dest, true); }
+                                    catch (IOException er)
+                                    {
+                                        MessageBox.Show(er.Message);
+                                    }
+                                }
+                                else if (dlr == DialogResult.No)
+                                    break;
+                            }
+                            else
+                            {
+                                try { File.Copy(file.FullName, dest); }
+                                catch (IOException er)
+                                {
+                                    MessageBox.Show(er.Message);
+                                }
+                            }
                         }
                     }
                 }
             }
             else
             {
+                if (listViewRight.SelectedItems.Count > 0)
+                {
+                    for (int i = 0; i < listViewRight.SelectedItems.Count; i++)
+                    {
+                        if (listViewRight.SelectedItems[i].Tag.GetType() == typeof(DirectoryInfo))
+                        {
+                            DirectoryInfo dir = (DirectoryInfo)listViewRight.SelectedItems[i].Tag;
+                            string name = dir.Name;
+                            string dest = Path.Combine(curDirLeft.FullName, name);
+                            if (dir.FullName == curDirLeft.FullName)
+                            {
+                                MessageBox.Show("The destination folder is a subfolder the source folder", "Interrupted Action", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                break;
+                            }
+                            CopyFolder(dir.FullName, dest);
+                        }
+                        else
+                        {
+                            FileInfo file = (FileInfo)listViewRight.SelectedItems[i].Tag;
+                            string name = Path.GetFileName(file.FullName);
+                            string dest = Path.Combine(curDirLeft.FullName, name);
 
+                            if (File.Exists(dest))
+                            {
+                                DialogResult dlr = MessageBox.Show(name + " existed! Do you want to overwrite? Yes (Overwrite), No (Skip)", "Replace file", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                if (dlr == DialogResult.Yes)
+                                {
+                                    try { File.Copy(file.FullName, dest, true); }
+                                    catch (IOException er)
+                                    {
+                                        MessageBox.Show(er.Message);
+                                    }
+                                }
+                                else if (dlr == DialogResult.No)
+                                    break;
+                            }
+                            else
+                            {
+                                try { File.Copy(file.FullName, dest); }
+                                catch (IOException er)
+                                {
+                                    MessageBox.Show(er.Message);
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -820,7 +899,13 @@ namespace TotalCommander
                     else
                     {
                         FileInfo file = (FileInfo)listViewLeft.SelectedItems[0].Tag;
-                        System.Diagnostics.Process.Start(editor , "\"" +  file.FullName + "\"");
+                        try { System.Diagnostics.Process.Start(editor, "\"" + file.FullName + "\""); }
+                        catch(IOException er)
+                        {
+                            MessageBox.Show(er.Message);
+                            MessageBox.Show("Notepad sets as default editor");
+                            editor = "notepad.exe";
+                        }
                     }
                 }
             }
@@ -835,7 +920,13 @@ namespace TotalCommander
                     else
                     {
                         FileInfo file = (FileInfo)listViewRight.SelectedItems[0].Tag;
-                        System.Diagnostics.Process.Start(editor , "\"" + file.FullName + "\"");
+                        try { System.Diagnostics.Process.Start(editor, "\"" + file.FullName + "\""); }
+                        catch (IOException er)
+                        {
+                            MessageBox.Show(er.Message);
+                            MessageBox.Show("Notepad sets as default editor");
+                            editor = "notepad.exe";
+                        }
                     }
                 }
             }
@@ -1025,16 +1116,80 @@ namespace TotalCommander
 
         private void ListViewLeft_MouseUp(object sender, MouseEventArgs e)
         {
+            focusOn = isFocus.Left;
             if(e.Button == MouseButtons.Right && listViewLeft.SelectedItems.Count != 0)
             {
                 contextMenuStrip1.Show(this, this.PointToClient(MousePosition));
             }
+            else if (e.Button == MouseButtons.Right && listViewRight.SelectedItems.Count == 0)
+            {
+                contextMenuStrip2.Show(this, this.PointToClient(MousePosition));
+            }
         }
 
-        private string editor = "Notepad.exe";
+        private void ListViewRight_MouseUp(object sender, MouseEventArgs e)
+        {
+            focusOn = isFocus.Right;
+            if (e.Button == MouseButtons.Right && listViewRight.SelectedItems.Count != 0)
+            {
+                contextMenuStrip1.Show(this, this.PointToClient(MousePosition));
+            }
+            else if(e.Button == MouseButtons.Right && listViewRight.SelectedItems.Count == 0)
+            {
+                contextMenuStrip2.Show(this, this.PointToClient(MousePosition));
+            }
+        }
+
         private void NotepadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            editor = "Notepad.exe";
+            editor = "notepad.exe";
+        }
+
+        private bool showHidden = false;
+        private void ShowHiddenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showHidden = !showHidden;
+        }
+
+        private void WordpadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            editor = "wordpad.exe";
+        }
+
+        private void AddToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(focusOn == isFocus.Left)
+            {
+                if(listViewLeft.SelectedItems.Count == 1)
+                {
+                    if (listViewLeft.SelectedItems[0].Tag.GetType() == typeof(FileInfo))
+                    {
+                        FileInfo file = (FileInfo)listViewLeft.SelectedItems[0].Tag;
+                        editor = file.FullName;
+                    }
+                    else MessageBox.Show("This's not a editor"); 
+                }
+                else
+                {
+                    MessageBox.Show("Please choose ONE item!");
+                }
+            }
+            else
+            {
+                if (listViewRight.SelectedItems.Count == 1)
+                {
+                    if (listViewRight.SelectedItems[0].Tag.GetType() == typeof(FileInfo))
+                    {
+                        FileInfo file = (FileInfo)listViewRight.SelectedItems[0].Tag;
+                        editor = file.FullName;
+                    }
+                    else MessageBox.Show("This's not a editor");
+                }
+                else
+                {
+                    MessageBox.Show("Please choose ONE item!");
+                }
+            }
         }
     }
 }
