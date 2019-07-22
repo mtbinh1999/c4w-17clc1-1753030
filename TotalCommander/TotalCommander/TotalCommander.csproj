@@ -86,10 +86,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Resources\detail.png" />
+    <EmbeddedResource Include="Resources\enter.png" />
+    <EmbeddedResource Include="Resources\folder.png" />
+    <EmbeddedResource Include="Resources\HelpMenu.pdf" />
+    <EmbeddedResource Include="Resources\list.png" />
+    <EmbeddedResource Include="Resources\refresh.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

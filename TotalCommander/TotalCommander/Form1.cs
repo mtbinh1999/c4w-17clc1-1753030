@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Reflection;
 
 namespace TotalCommander
 {
@@ -324,11 +325,24 @@ namespace TotalCommander
             }
         }
 
+        private void saveFile()
+        {
+            Assembly Assemb = Assembly.GetExecutingAssembly();
+            Stream stream = Assemb.GetManifestResourceStream("TotalCommander.Resources.HelpMenu.pdf");
+            FileStream fs = new FileStream(Application.StartupPath + "\\HelpMenu.pdf", FileMode.CreateNew);
+            BinaryReader br = new BinaryReader(stream);
+            byte[] save = new byte[stream.Length];
+            br.Read(save, 0, save.Length);
+            BinaryWriter bw = new BinaryWriter(fs);
+            bw.Write(save, 0, save.Length);
+            bw.Flush();
+            bw.Close();
+        }
+
         private void HelpToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(Application.StartupPath);
-            FileInfo file = new FileInfo(Application.StartupPath + "\\HelpMenu.pdf");
-            System.Diagnostics.Process.Start(file.FullName);
+            saveFile();
+            System.Diagnostics.Process.Start("HelpMenu.pdf");
         }
 
         private void ListButton_Click(object sender, EventArgs e)
@@ -410,15 +424,18 @@ namespace TotalCommander
             {
                 if (listViewLeft.SelectedItems.Count > 0)
                 {
-                    if (listViewLeft.SelectedItems[0].Tag.GetType() == typeof(DirectoryInfo))
+                    for (int i = 0; i < listViewLeft.SelectedItems.Count; i++)
                     {
-                        MessageBox.Show("This's a folder");
-                    }
-                    else
-                    {
-                        FileInfo file = (FileInfo)listViewLeft.SelectedItems[0].Tag;
-                        ViewForm f = new ViewForm(file.FullName);
-                        f.ShowDialog();
+                        if (listViewLeft.SelectedItems[i].Tag.GetType() == typeof(DirectoryInfo))
+                        {
+                            MessageBox.Show(listViewLeft.SelectedItems[i].Text + " is a folder");
+                        }
+                        else
+                        {
+                            FileInfo file = (FileInfo)listViewLeft.SelectedItems[i].Tag;
+                            ViewForm f = new ViewForm(file.FullName);
+                            f.ShowDialog();
+                        }
                     }
                 }
             }
@@ -803,7 +820,7 @@ namespace TotalCommander
                     else
                     {
                         FileInfo file = (FileInfo)listViewLeft.SelectedItems[0].Tag;
-                        System.Diagnostics.Process.Start(file.FullName);
+                        System.Diagnostics.Process.Start(editor , "\"" +  file.FullName + "\"");
                     }
                 }
             }
@@ -818,7 +835,7 @@ namespace TotalCommander
                     else
                     {
                         FileInfo file = (FileInfo)listViewRight.SelectedItems[0].Tag;
-                        System.Diagnostics.Process.Start(file.FullName);
+                        System.Diagnostics.Process.Start(editor , "\"" + file.FullName + "\"");
                     }
                 }
             }
@@ -1004,6 +1021,20 @@ namespace TotalCommander
             Application.ExitThread();
             this.Close();
             this.Dispose();
+        }
+
+        private void ListViewLeft_MouseUp(object sender, MouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Right && listViewLeft.SelectedItems.Count != 0)
+            {
+                contextMenuStrip1.Show(this, this.PointToClient(MousePosition));
+            }
+        }
+
+        private string editor = "Notepad.exe";
+        private void NotepadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            editor = "Notepad.exe";
         }
     }
 }
