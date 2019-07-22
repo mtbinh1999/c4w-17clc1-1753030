@@ -293,7 +293,13 @@ namespace TotalCommander
                 else
                 {
                     FileInfo file = (FileInfo)listViewLeft.SelectedItems[0].Tag;
-                    System.Diagnostics.Process.Start(file.FullName);
+                    try { System.Diagnostics.Process.Start(editor, "\"" + file.FullName + "\""); }
+                    catch (IOException er)
+                    {
+                        MessageBox.Show(er.Message);
+                        MessageBox.Show("Notepad sets as default editor");
+                        editor = "notepad.exe";
+                    }
                 }
 
             }
@@ -315,8 +321,14 @@ namespace TotalCommander
                 }
                 else
                 {
-                    FileInfo file = (FileInfo)listViewRight.SelectedItems[0].Tag;
-                    System.Diagnostics.Process.Start(file.FullName);
+                    FileInfo file = (FileInfo)listViewLeft.SelectedItems[0].Tag;
+                    try { System.Diagnostics.Process.Start(editor, "\"" + file.FullName + "\""); }
+                    catch (IOException er)
+                    {
+                        MessageBox.Show(er.Message);
+                        MessageBox.Show("Notepad sets as default editor");
+                        editor = "notepad.exe";
+                    }
                 }
 
             }
@@ -870,7 +882,6 @@ namespace TotalCommander
                                 catch (IOException er)
                                 {
                                     MessageBox.Show(er.Message);
-                                    return;
                                 }
                             }
                             else
@@ -879,18 +890,16 @@ namespace TotalCommander
                                 catch (IOException er)
                                 {
                                     MessageBox.Show(er.Message);
-                                    return;
                                 }
                             }
                         }
                         else
                         {
                             FileInfo file = (FileInfo)listViewLeft.SelectedItems[i].Tag;
-                            try { file.Delete(); refreshListView(); }
+                            try { file.Delete();}
                             catch(IOException er)
                             {
                                 MessageBox.Show(er.Message);
-                                return;
                             }
                         }
                     }
@@ -917,7 +926,6 @@ namespace TotalCommander
                                 catch (IOException er)
                                 {
                                     MessageBox.Show(er.Message);
-                                    return;
                                 }
                             }
                             else
@@ -926,7 +934,6 @@ namespace TotalCommander
                                 catch (IOException er)
                                 {
                                     MessageBox.Show(er.Message);
-                                    return;
                                 }
                             }
                         }
@@ -937,7 +944,6 @@ namespace TotalCommander
                             catch (IOException er)
                             {
                                 MessageBox.Show(er.Message);
-                                return;
                             }
                         }
                     }
@@ -1414,7 +1420,6 @@ namespace TotalCommander
                                 catch (IOException er)
                                 {
                                     MessageBox.Show(er.Message);
-                                    return;
                                 }
                             }
                             else
@@ -1423,18 +1428,16 @@ namespace TotalCommander
                                 catch (IOException er)
                                 {
                                     MessageBox.Show(er.Message);
-                                    return;
                                 }
                             }
                         }
                         else
                         {
                             FileInfo file = (FileInfo)listViewLeft.SelectedItems[i].Tag;
-                            try { file.Delete(); refreshListView(); }
+                            try { file.Delete();}
                             catch (IOException er)
                             {
                                 MessageBox.Show(er.Message);
-                                return;
                             }
                         }
                     }
@@ -1461,7 +1464,6 @@ namespace TotalCommander
                                 catch (IOException er)
                                 {
                                     MessageBox.Show(er.Message);
-                                    return;
                                 }
                             }
                             else
@@ -1470,7 +1472,6 @@ namespace TotalCommander
                                 catch (IOException er)
                                 {
                                     MessageBox.Show(er.Message);
-                                    return;
                                 }
                             }
                         }
@@ -1481,7 +1482,6 @@ namespace TotalCommander
                             catch (IOException er)
                             {
                                 MessageBox.Show(er.Message);
-                                return;
                             }
                         }
                     }
@@ -1536,6 +1536,11 @@ namespace TotalCommander
             if (focusOn == isFocus.Left)
                 openDirectoryLeft();
             else openDirectoryRight();
+        }
+
+        private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("TotalCommander - 1753030 - Mai Thanh Binh \n Individual Project \n WindowsForm", "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
