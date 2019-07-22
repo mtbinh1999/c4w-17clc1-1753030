@@ -538,7 +538,10 @@ namespace TotalCommander
             {
                 if(listViewLeft.SelectedItems.Count > 0)
                 {
-                    for(int i = 0; i < listViewLeft.SelectedItems.Count; i++)
+                    DialogResult confirm = MessageBox.Show("Confirm Copy!", "Copy Option", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                    if (confirm == DialogResult.Cancel)
+                        return;
+                    for (int i = 0; i < listViewLeft.SelectedItems.Count; i++)
                     {
                         if(listViewLeft.SelectedItems[i].Tag.GetType() == typeof(DirectoryInfo))
                         {
@@ -588,6 +591,9 @@ namespace TotalCommander
             {
                 if (listViewRight.SelectedItems.Count > 0)
                 {
+                    DialogResult confirm = MessageBox.Show("Confirm Copy!", "Copy Option", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                    if (confirm == DialogResult.Cancel)
+                        return;
                     for (int i = 0; i < listViewRight.SelectedItems.Count; i++)
                     {
                         if (listViewRight.SelectedItems[i].Tag.GetType() == typeof(DirectoryInfo))
@@ -640,14 +646,114 @@ namespace TotalCommander
         {
             if(focusOn == isFocus.Left)
             {
-                if(listViewLeft.SelectedItems.Count > 0)
+                if (listViewLeft.SelectedItems.Count > 0)
                 {
-                    MessageBox.Show(string.Format("{0}", listViewLeft.SelectedItems.Count));
+                    DialogResult confirm = MessageBox.Show("Confirm Move!", "Move Option", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                    if (confirm == DialogResult.Cancel)
+                        return;
+                    for (int i = 0; i < listViewLeft.SelectedItems.Count; i++)
+                    {
+                        if (listViewLeft.SelectedItems[i].Tag.GetType() == typeof(DirectoryInfo))
+                        {
+                            DirectoryInfo dir = (DirectoryInfo)listViewLeft.SelectedItems[i].Tag;
+                            if (dir.FullName == curDirRight.FullName)
+                            {
+                                MessageBox.Show("The destination folder is a subfolder the source folder", "Interrupted Action", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                break;
+                            }
+                            string dest = Path.Combine(curDirRight.FullName, dir.Name);
+                            Directory.Move(dir.FullName, dest);
+                        }
+                        else
+                        {
+                            FileInfo file = (FileInfo)listViewLeft.SelectedItems[i].Tag;
+                            string name = Path.GetFileName(file.FullName);
+                            string dest = Path.Combine(curDirRight.FullName, name);
+
+                            if (File.Exists(dest))
+                            {
+                                DialogResult dlr = MessageBox.Show(name + " existed! Do you want to overwrite? Yes (Overwrite), No (Skip)", "Replace file", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                if (dlr == DialogResult.Yes)
+                                {
+                                    try {
+                                        File.Copy(file.FullName, dest, true);
+                                        File.Delete(file.FullName);
+                                    }
+                                    catch (IOException er)
+                                    {
+                                        MessageBox.Show(er.Message);
+                                    }
+                                }
+                                else if (dlr == DialogResult.No)
+                                    break;
+                            }
+                            else
+                            {
+                                try { File.Move(file.FullName, dest); }
+                                catch (IOException er)
+                                {
+                                    MessageBox.Show(er.Message);
+                                }
+                            }
+                        }
+                    }
                 }
             }
             else
             {
+                if (listViewRight.SelectedItems.Count > 0)
+                {
+                    DialogResult confirm = MessageBox.Show("Confirm Move!", "Move Option", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                    if (confirm == DialogResult.Cancel)
+                        return;
+                    for (int i = 0; i < listViewRight.SelectedItems.Count; i++)
+                    {
+                        if (listViewRight.SelectedItems[i].Tag.GetType() == typeof(DirectoryInfo))
+                        {
+                            DirectoryInfo dir = (DirectoryInfo)listViewRight.SelectedItems[i].Tag;
+                            if (dir.FullName == curDirLeft.FullName)
+                            {
+                                MessageBox.Show("The destination folder is a subfolder the source folder", "Interrupted Action", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                break;
+                            }
+                            string dest = Path.Combine(curDirLeft.FullName, dir.Name);
+                            Directory.Move(dir.FullName, dest);
+                        }
+                        else
+                        {
+                            FileInfo file = (FileInfo)listViewRight.SelectedItems[i].Tag;
+                            string name = Path.GetFileName(file.FullName);
+                            string dest = Path.Combine(curDirLeft.FullName, name);
 
+                            if (File.Exists(dest))
+                            {
+                                DialogResult dlr = MessageBox.Show(name + " existed! Do you want to overwrite? Yes (Overwrite), No (Skip)", "Replace file", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                if (dlr == DialogResult.Yes)
+                                {
+                                    try
+                                    {
+                                        File.Copy(file.FullName, dest, true);
+                                        File.Delete(file.FullName);
+                                    }
+                                    catch (IOException er)
+                                    {
+                                        MessageBox.Show(er.Message);
+                                    }
+                                }
+                                else if (dlr == DialogResult.No)
+                                    break;
+                            }
+                            else
+                            {
+                                try { File.Move(file.FullName, dest); }
+                                catch (IOException er)
+                                {
+                                    MessageBox.Show(er.Message);
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -669,10 +775,10 @@ namespace TotalCommander
                     {
                         while (true)
                         {
-                            DirectoryInfo edir = new DirectoryInfo(curDirLeft.FullName + string.Format("New Folder ({0})", i));
+                            DirectoryInfo edir = new DirectoryInfo(curDirLeft.FullName + string.Format("\\New Folder ({0})", i));
                             if(!edir.Exists)
                             {
-                                Directory.CreateDirectory(curDirLeft.FullName + string.Format("New Folder ({0})", i));
+                                Directory.CreateDirectory(curDirLeft.FullName + string.Format("\\New Folder ({0})", i));
                                 refreshListView();
                                 return;
                             }
@@ -704,10 +810,10 @@ namespace TotalCommander
                     {
                         while (true)
                         {
-                            DirectoryInfo edir = new DirectoryInfo(curDirRight.FullName + string.Format("New Folder ({0})", i));
+                            DirectoryInfo edir = new DirectoryInfo(curDirRight.FullName + string.Format("\\New Folder ({0})", i));
                             if (!edir.Exists)
                             {
-                                Directory.CreateDirectory(curDirRight.FullName + string.Format("New Folder ({0})", i));
+                                Directory.CreateDirectory(curDirRight.FullName + string.Format("\\New Folder ({0})", i));
                                 refreshListView();
                                 return;
                             }
@@ -950,10 +1056,10 @@ namespace TotalCommander
                     {
                         while (true)
                         {
-                            DirectoryInfo edir = new DirectoryInfo(curDirLeft.FullName + string.Format("New Folder ({0})", i));
+                            DirectoryInfo edir = new DirectoryInfo(curDirLeft.FullName + string.Format("\\New Folder ({0})", i));
                             if (!edir.Exists)
                             {
-                                Directory.CreateDirectory(curDirLeft.FullName + string.Format("New Folder ({0})", i));
+                                Directory.CreateDirectory(curDirLeft.FullName + string.Format("\\New Folder ({0})", i));
                                 refreshListView();
                                 return;
                             }
@@ -985,10 +1091,10 @@ namespace TotalCommander
                     {
                         while (true)
                         {
-                            DirectoryInfo edir = new DirectoryInfo(curDirRight.FullName + string.Format("New Folder ({0})", i));
+                            DirectoryInfo edir = new DirectoryInfo(curDirRight.FullName + string.Format("\\New Folder ({0})", i));
                             if (!edir.Exists)
                             {
-                                Directory.CreateDirectory(curDirRight.FullName + string.Format("New Folder ({0})", i));
+                                Directory.CreateDirectory(curDirRight.FullName + string.Format("\\New Folder ({0})", i));
                                 refreshListView();
                                 return;
                             }
@@ -1005,6 +1111,284 @@ namespace TotalCommander
                 }
             }
             refreshListView();
+        }
+
+        private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (focusOn == isFocus.Left)
+            {
+                if (listViewLeft.SelectedItems.Count > 0)
+                {
+                    DialogResult confirm = MessageBox.Show("Confirm Copy!", "Copy Option", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                    if (confirm == DialogResult.Cancel)
+                        return;
+                    for (int i = 0; i < listViewLeft.SelectedItems.Count; i++)
+                    {
+                        if (listViewLeft.SelectedItems[i].Tag.GetType() == typeof(DirectoryInfo))
+                        {
+                            DirectoryInfo dir = (DirectoryInfo)listViewLeft.SelectedItems[i].Tag;
+                            string name = dir.Name;
+                            string dest = Path.Combine(curDirRight.FullName, name);
+                            if (dir.FullName == curDirRight.FullName)
+                            {
+                                MessageBox.Show("The destination folder is a subfolder the source folder", "Interrupted Action", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                break;
+                            }
+                            CopyFolder(dir.FullName, dest);
+                        }
+                        else
+                        {
+                            FileInfo file = (FileInfo)listViewLeft.SelectedItems[i].Tag;
+                            string name = Path.GetFileName(file.FullName);
+                            string dest = Path.Combine(curDirRight.FullName, name);
+
+                            if (File.Exists(dest))
+                            {
+                                DialogResult dlr = MessageBox.Show(name + " existed! Do you want to overwrite? Yes (Overwrite), No (Skip)", "Replace file", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                if (dlr == DialogResult.Yes)
+                                {
+                                    try { File.Copy(file.FullName, dest, true); }
+                                    catch (IOException er)
+                                    {
+                                        MessageBox.Show(er.Message);
+                                    }
+                                }
+                                else if (dlr == DialogResult.No)
+                                    break;
+                            }
+                            else
+                            {
+                                try { File.Copy(file.FullName, dest); }
+                                catch (IOException er)
+                                {
+                                    MessageBox.Show(er.Message);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (listViewRight.SelectedItems.Count > 0)
+                {
+                    DialogResult confirm = MessageBox.Show("Confirm Copy!", "Copy Option", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                    if (confirm == DialogResult.Cancel)
+                        return;
+                    for (int i = 0; i < listViewRight.SelectedItems.Count; i++)
+                    {
+                        if (listViewRight.SelectedItems[i].Tag.GetType() == typeof(DirectoryInfo))
+                        {
+                            DirectoryInfo dir = (DirectoryInfo)listViewRight.SelectedItems[i].Tag;
+                            string name = dir.Name;
+                            string dest = Path.Combine(curDirLeft.FullName, name);
+                            if (dir.FullName == curDirLeft.FullName)
+                            {
+                                MessageBox.Show("The destination folder is a subfolder the source folder", "Interrupted Action", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                break;
+                            }
+                            CopyFolder(dir.FullName, dest);
+                        }
+                        else
+                        {
+                            FileInfo file = (FileInfo)listViewRight.SelectedItems[i].Tag;
+                            string name = Path.GetFileName(file.FullName);
+                            string dest = Path.Combine(curDirLeft.FullName, name);
+
+                            if (File.Exists(dest))
+                            {
+                                DialogResult dlr = MessageBox.Show(name + " existed! Do you want to overwrite? Yes (Overwrite), No (Skip)", "Replace file", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                if (dlr == DialogResult.Yes)
+                                {
+                                    try { File.Copy(file.FullName, dest, true); }
+                                    catch (IOException er)
+                                    {
+                                        MessageBox.Show(er.Message);
+                                    }
+                                }
+                                else if (dlr == DialogResult.No)
+                                    break;
+                            }
+                            else
+                            {
+                                try { File.Copy(file.FullName, dest); }
+                                catch (IOException er)
+                                {
+                                    MessageBox.Show(er.Message);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void NotepadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            editor = "notepad.exe";
+        }
+
+        private bool showHidden = false;
+        private void ShowHiddenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showHidden = !showHidden;
+        }
+
+        private void WordpadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            editor = "wordpad.exe";
+        }
+
+        private void AddToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (focusOn == isFocus.Left)
+            {
+                if (listViewLeft.SelectedItems.Count == 1)
+                {
+                    if (listViewLeft.SelectedItems[0].Tag.GetType() == typeof(FileInfo))
+                    {
+                        FileInfo file = (FileInfo)listViewLeft.SelectedItems[0].Tag;
+                        editor = file.FullName;
+                    }
+                    else MessageBox.Show("This's not a editor");
+                }
+                else
+                {
+                    MessageBox.Show("Please choose ONE item!");
+                }
+            }
+            else
+            {
+                if (listViewRight.SelectedItems.Count == 1)
+                {
+                    if (listViewRight.SelectedItems[0].Tag.GetType() == typeof(FileInfo))
+                    {
+                        FileInfo file = (FileInfo)listViewRight.SelectedItems[0].Tag;
+                        editor = file.FullName;
+                    }
+                    else MessageBox.Show("This's not a editor");
+                }
+                else
+                {
+                    MessageBox.Show("Please choose ONE item!");
+                }
+            }
+        }
+
+        private void MoveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (focusOn == isFocus.Left)
+            {
+                if (listViewLeft.SelectedItems.Count > 0)
+                {
+                    DialogResult confirm = MessageBox.Show("Confirm Move!", "Move Option", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                    if (confirm == DialogResult.Cancel)
+                        return;
+                    for (int i = 0; i < listViewLeft.SelectedItems.Count; i++)
+                    {
+                        if (listViewLeft.SelectedItems[i].Tag.GetType() == typeof(DirectoryInfo))
+                        {
+                            DirectoryInfo dir = (DirectoryInfo)listViewLeft.SelectedItems[i].Tag;
+                            if (dir.FullName == curDirRight.FullName)
+                            {
+                                MessageBox.Show("The destination folder is a subfolder the source folder", "Interrupted Action", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                break;
+                            }
+                            string dest = Path.Combine(curDirRight.FullName, dir.Name);
+                            Directory.Move(dir.FullName, dest);
+                        }
+                        else
+                        {
+                            FileInfo file = (FileInfo)listViewLeft.SelectedItems[i].Tag;
+                            string name = Path.GetFileName(file.FullName);
+                            string dest = Path.Combine(curDirRight.FullName, name);
+
+                            if (File.Exists(dest))
+                            {
+                                DialogResult dlr = MessageBox.Show(name + " existed! Do you want to overwrite? Yes (Overwrite), No (Skip)", "Replace file", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                if (dlr == DialogResult.Yes)
+                                {
+                                    try
+                                    {
+                                        File.Copy(file.FullName, dest, true);
+                                        File.Delete(file.FullName);
+                                    }
+                                    catch (IOException er)
+                                    {
+                                        MessageBox.Show(er.Message);
+                                    }
+                                }
+                                else if (dlr == DialogResult.No)
+                                    break;
+                            }
+                            else
+                            {
+                                try { File.Move(file.FullName, dest); }
+                                catch (IOException er)
+                                {
+                                    MessageBox.Show(er.Message);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (listViewRight.SelectedItems.Count > 0)
+                {
+                    DialogResult confirm = MessageBox.Show("Confirm Move!", "Move Option", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                    if (confirm == DialogResult.Cancel)
+                        return;
+                    for (int i = 0; i < listViewRight.SelectedItems.Count; i++)
+                    {
+                        if (listViewRight.SelectedItems[i].Tag.GetType() == typeof(DirectoryInfo))
+                        {
+                            DirectoryInfo dir = (DirectoryInfo)listViewRight.SelectedItems[i].Tag;
+                            if (dir.FullName == curDirLeft.FullName)
+                            {
+                                MessageBox.Show("The destination folder is a subfolder the source folder", "Interrupted Action", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                break;
+                            }
+                            string dest = Path.Combine(curDirLeft.FullName, dir.Name);
+                            Directory.Move(dir.FullName, dest);
+                        }
+                        else
+                        {
+                            FileInfo file = (FileInfo)listViewRight.SelectedItems[i].Tag;
+                            string name = Path.GetFileName(file.FullName);
+                            string dest = Path.Combine(curDirLeft.FullName, name);
+
+                            if (File.Exists(dest))
+                            {
+                                DialogResult dlr = MessageBox.Show(name + " existed! Do you want to overwrite? Yes (Overwrite), No (Skip)", "Replace file", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                if (dlr == DialogResult.Yes)
+                                {
+                                    try
+                                    {
+                                        File.Copy(file.FullName, dest, true);
+                                        File.Delete(file.FullName);
+                                    }
+                                    catch (IOException er)
+                                    {
+                                        MessageBox.Show(er.Message);
+                                    }
+                                }
+                                else if (dlr == DialogResult.No)
+                                    break;
+                            }
+                            else
+                            {
+                                try { File.Move(file.FullName, dest); }
+                                catch (IOException er)
+                                {
+                                    MessageBox.Show(er.Message);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1140,56 +1524,18 @@ namespace TotalCommander
             }
         }
 
-        private void NotepadToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RefreshToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            editor = "notepad.exe";
+            if (focusOn == isFocus.Left)
+                openDirectoryLeft();
+            else openDirectoryRight();
         }
 
-        private bool showHidden = false;
-        private void ShowHiddenToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RefreshToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            showHidden = !showHidden;
-        }
-
-        private void WordpadToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            editor = "wordpad.exe";
-        }
-
-        private void AddToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if(focusOn == isFocus.Left)
-            {
-                if(listViewLeft.SelectedItems.Count == 1)
-                {
-                    if (listViewLeft.SelectedItems[0].Tag.GetType() == typeof(FileInfo))
-                    {
-                        FileInfo file = (FileInfo)listViewLeft.SelectedItems[0].Tag;
-                        editor = file.FullName;
-                    }
-                    else MessageBox.Show("This's not a editor"); 
-                }
-                else
-                {
-                    MessageBox.Show("Please choose ONE item!");
-                }
-            }
-            else
-            {
-                if (listViewRight.SelectedItems.Count == 1)
-                {
-                    if (listViewRight.SelectedItems[0].Tag.GetType() == typeof(FileInfo))
-                    {
-                        FileInfo file = (FileInfo)listViewRight.SelectedItems[0].Tag;
-                        editor = file.FullName;
-                    }
-                    else MessageBox.Show("This's not a editor");
-                }
-                else
-                {
-                    MessageBox.Show("Please choose ONE item!");
-                }
-            }
+            if (focusOn == isFocus.Left)
+                openDirectoryLeft();
+            else openDirectoryRight();
         }
     }
 }
